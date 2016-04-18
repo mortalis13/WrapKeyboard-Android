@@ -1,0 +1,32 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
+        package="org.mortalis.wrapkeyboardabc"
+        android:versionCode="1"
+        android:versionName="1.03">
+    
+    <supports-screens
+            android:anyDensity="true"
+            android:largeScreens="true"
+            android:normalScreens="true"
+            android:smallScreens="true" />
+    
+    <uses-sdk
+    android:minSdkVersion="15"
+    android:targetSdkVersion="19" />
+    
+    <application android:label="@string/ime_name">
+        <service android:name="WrapKeyboard"
+                 android:permission="android.permission.BIND_INPUT_METHOD">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+            <meta-data android:name="android.view.im" android:resource="@xml/method" />
+        </service>
+
+        <activity android:name="org.mortalis.wrapkeyboardabc.ImePreferences" android:label="@string/settings_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+
+    </application>
+</manifest>
