@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="candidate_normal">#FF000000</color>
-    <color name="candidate_recommended">#FFE35900</color>
-    <color name="candidate_other">#ff808080</color>
-    <color name="candidate_background">#bbffffff</color>
+  <color name="transparent">@android:color/transparent</color>
+  
+  <color name="key_background_default">#254046</color>
+  <color name="key_background_pressed">#345861</color>
+  <color name="key_background_modifier_default">#39292f</color>
+  <color name="key_background_modifier_pressed">#694251</color>
+  <color name="key_background_stroke">#818181</color>
 </resources>

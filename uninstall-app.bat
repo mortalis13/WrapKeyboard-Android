@@ -1,0 +1,1 @@
+adb uninstall org.mortalis.wrapkeyboardabc
