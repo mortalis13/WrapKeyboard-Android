@@ -10,7 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.view.inputmethod.EditorInfo;
 
-public class LatinKeyboard extends Keyboard {
+public class CustomKeyboard extends Keyboard {
   
   private Key mEnterKey;
   private Key mSpaceKey;
@@ -19,11 +19,11 @@ public class LatinKeyboard extends Keyboard {
   private int keyWidth;
   
   
-  public LatinKeyboard(Context context, int xmlLayoutResId) {
+  public CustomKeyboard(Context context, int xmlLayoutResId) {
     super(context, xmlLayoutResId);
   }
   
-  public LatinKeyboard(Context context, int displayWidth, int xmlLayoutResId) {
+  public CustomKeyboard(Context context, int displayWidth, int xmlLayoutResId) {
     this(context, xmlLayoutResId);
     this.displayWidth = displayWidth;
     
@@ -32,7 +32,7 @@ public class LatinKeyboard extends Keyboard {
     }
   }
   
-  public LatinKeyboard(Context context, int layoutTemplateResId, CharSequence characters, int columns, int horizontalPadding) {
+  public CustomKeyboard(Context context, int layoutTemplateResId, CharSequence characters, int columns, int horizontalPadding) {
     super(context, layoutTemplateResId, characters, columns, horizontalPadding);
   }
   

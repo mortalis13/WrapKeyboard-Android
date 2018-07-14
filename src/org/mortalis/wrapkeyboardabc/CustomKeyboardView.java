@@ -21,7 +21,7 @@ import android.inputmethodservice.KeyboardView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-public class LatinKeyboardView extends KeyboardView {
+public class CustomKeyboardView extends KeyboardView {
   
   static final int KEYCODE_OPTIONS = -100;
   
@@ -33,12 +33,12 @@ public class LatinKeyboardView extends KeyboardView {
   private Paint specKeyPaint;
   
   
-  public LatinKeyboardView(Context context, AttributeSet attrs) {
+  public CustomKeyboardView(Context context, AttributeSet attrs) {
     super(context, attrs);
     init();
   }
   
-  public LatinKeyboardView(Context context, AttributeSet attrs, int defStyle) {
+  public CustomKeyboardView(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
     init();
   }

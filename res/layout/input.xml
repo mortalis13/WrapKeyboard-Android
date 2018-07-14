@@ -8,7 +8,7 @@
   android:layout_height="wrap_content" 
 /> -->
 
-<org.mortalis.wrapkeyboardabc.LatinKeyboardView
+<org.mortalis.wrapkeyboardabc.CustomKeyboardView
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/keyboard"
   android:layout_alignParentBottom="true"

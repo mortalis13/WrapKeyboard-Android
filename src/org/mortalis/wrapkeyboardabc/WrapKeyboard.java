@@ -30,7 +30,7 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
   
   private InputMethodManager mInputMethodManager;
   
-  private LatinKeyboardView mInputView;
+  private CustomKeyboardView mInputView;
   private CompletionInfo[] mCompletions;
   
   private StringBuilder mComposing = new StringBuilder();
@@ -41,15 +41,15 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
   private long mLastShiftTime;
   private long mMetaState;
   
-  private LatinKeyboard mSymbolsKeyboard;
-  private LatinKeyboard mSymbolsShiftedKeyboard;
-  private LatinKeyboard mQwertyKeyboard;
+  private CustomKeyboard mSymbolsKeyboard;
+  private CustomKeyboard mSymbolsExtKeyboard;
+  private CustomKeyboard mLatinKeyboard;
   
-  private LatinKeyboard mRuKeyboard;
-  private LatinKeyboard mTextEditKeyboard;
-  private LatinKeyboard mLangSymbolsKeyboard;
+  private CustomKeyboard mCyrillicKeyboard;
+  private CustomKeyboard mTextEditKeyboard;
+  private CustomKeyboard mExtCharsKeyboard;
   
-  private LatinKeyboard mCurKeyboard;
+  private CustomKeyboard mCurKeyboard;
   private Keyboard mCurLangKeyboard;
   
   private String mWordSeparators;
@@ -71,30 +71,29 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
     Fun.logd("WrapKeyboard.onInitializeInterface()");
     
     int displayWidth = getMaxWidth();
-    if (mQwertyKeyboard != null) {
+    if (mLatinKeyboard != null) {
       if (displayWidth == mLastDisplayWidth) return;
       mLastDisplayWidth = displayWidth;
     }
     
-    mQwertyKeyboard = new LatinKeyboard(this, displayWidth, R.xml.qwerty);
-    mSymbolsKeyboard = new LatinKeyboard(this, displayWidth, R.xml.symbols);
-    mSymbolsShiftedKeyboard = new LatinKeyboard(this, displayWidth, R.xml.symbols_shift);
+    mLatinKeyboard = new CustomKeyboard(this, displayWidth, R.xml.keyboard_latin);
+    mSymbolsKeyboard = new CustomKeyboard(this, displayWidth, R.xml.keyboard_symbols);
+    mSymbolsExtKeyboard = new CustomKeyboard(this, displayWidth, R.xml.keyboard_symbols_ext);
     
-    mRuKeyboard = new LatinKeyboard(this, displayWidth, R.xml.kbd_ru);
-    mTextEditKeyboard = new LatinKeyboard(this, displayWidth, R.xml.text_edit);
-    mLangSymbolsKeyboard = new LatinKeyboard(this, displayWidth, R.xml.lang_symbols);
+    mCyrillicKeyboard = new CustomKeyboard(this, displayWidth, R.xml.keyboard_cyrillic);
+    mTextEditKeyboard = new CustomKeyboard(this, displayWidth, R.xml.keyboard_text_edit);
+    mExtCharsKeyboard = new CustomKeyboard(this, displayWidth, R.xml.keyboard_ext_chars);
     
-    mCurLangKeyboard = mQwertyKeyboard;
+    mCurLangKeyboard = mLatinKeyboard;
   }
   
   @Override
   public View onCreateInputView() {
     Fun.logd("WrapKeyboard.onCreateInputView()");
     
-    mInputView = (LatinKeyboardView) getLayoutInflater().inflate(R.layout.input, null);
+    mInputView = (CustomKeyboardView) getLayoutInflater().inflate(R.layout.input, null);
     mInputView.setOnKeyboardActionListener(this);
-    mInputView.setKeyboard(mQwertyKeyboard);
-    // Fun.log("--k_width: " + mQwertyKeyboard.getKeys().get(0).width);
+    mInputView.setKeyboard(mLatinKeyboard);
     
     return mInputView;
   }
@@ -132,7 +131,7 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
         break;
       
       case InputType.TYPE_CLASS_TEXT:
-        mCurKeyboard = mQwertyKeyboard;
+        mCurKeyboard = mLatinKeyboard;
         
         int variation = attribute.inputType & InputType.TYPE_MASK_VARIATION;
         if (variation == InputType.TYPE_TEXT_VARIATION_PASSWORD || variation == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
@@ -150,7 +149,7 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
         break;
       
       default:
-        mCurKeyboard = mQwertyKeyboard;
+        mCurKeyboard = mLatinKeyboard;
     }
     
     mCurKeyboard.setImeOptions(getResources(), attribute.imeOptions);
@@ -167,7 +166,7 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
     
     setCandidatesViewShown(false);
     
-    mCurKeyboard = mQwertyKeyboard;
+    mCurKeyboard = mLatinKeyboard;
     if (mInputView != null) {
       mInputView.closing();
     }
@@ -365,7 +364,8 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
   }
   
   
-  // Implementation of KeyboardViewListener
+  // -- KeyboardView.OnKeyboardActionListener
+  @Override
   public void onKey(int primaryCode, int[] keyCodes) {
     if (isWordSeparator(primaryCode)) {
       if (mComposing.length() > 0) {
@@ -385,17 +385,17 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
       handleClose();
       return;
     }
-    else if (primaryCode == LatinKeyboardView.KEYCODE_OPTIONS) {
+    else if (primaryCode == CustomKeyboardView.KEYCODE_OPTIONS) {
       
     }
     else if (primaryCode == Keyboard.KEYCODE_MODE_CHANGE && mInputView != null) {
       Keyboard current = mInputView.getKeyboard();
-      if (current == mSymbolsKeyboard || current == mSymbolsShiftedKeyboard || current == mTextEditKeyboard || current == mLangSymbolsKeyboard) {
-        if (mCurLangKeyboard == mQwertyKeyboard) {
-          current = mQwertyKeyboard;
+      if (current == mSymbolsKeyboard || current == mSymbolsExtKeyboard || current == mTextEditKeyboard || current == mExtCharsKeyboard) {
+        if (mCurLangKeyboard == mLatinKeyboard) {
+          current = mLatinKeyboard;
         }
-        else if (mCurLangKeyboard == mRuKeyboard) {
-          current = mRuKeyboard;
+        else if (mCurLangKeyboard == mCyrillicKeyboard) {
+          current = mCyrillicKeyboard;
         }
       }
       else {
@@ -407,21 +407,17 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
         current.setShifted(false);
       }
     }
-    
     else if (primaryCode == Vars.KEY_SWITCH_LANG_KEYBOARD) {
       Keyboard current = mInputView.getKeyboard();
-      if (current == mQwertyKeyboard) current = mRuKeyboard;
-      else current = mQwertyKeyboard;
-      
-      mCurLangKeyboard = current;
-      mInputView.setKeyboard(current);
+      mCurLangKeyboard = current == mLatinKeyboard ? mCyrillicKeyboard: mLatinKeyboard;
+      mInputView.setKeyboard(mCurLangKeyboard);
     }
     else if (primaryCode == Vars.KEY_OPEN_TEXT_EDIT_KEYBOARD) {
       Keyboard current = mTextEditKeyboard;
       mInputView.setKeyboard(current);
     }
     else if (primaryCode == Vars.KEY_LANG_SYMBOLS_KEYBOARD) {
-      Keyboard current = mLangSymbolsKeyboard;
+      Keyboard current = mExtCharsKeyboard;
       mInputView.setKeyboard(current);
     }
     else if (primaryCode == Vars.KEY_MOVE_LEFT) {
@@ -447,13 +443,13 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
       long eventTime = SystemClock.uptimeMillis();
       InputConnection ic = getCurrentInputConnection();
       
-      if (!LatinKeyboardView.selectionModeEnabled) {
+      if (!CustomKeyboardView.selectionModeEnabled) {
         ic.sendKeyEvent(new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_DOWN, keyEventCode, 0, 0));
-        LatinKeyboardView.selectionModeEnabled = true;
+        CustomKeyboardView.selectionModeEnabled = true;
       }
       else {
         ic.sendKeyEvent(new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_UP, keyEventCode, 0, 0));
-        LatinKeyboardView.selectionModeEnabled = false;
+        CustomKeyboardView.selectionModeEnabled = false;
       }
     }
     else if (primaryCode == Vars.KEY_ALL) {
@@ -479,6 +475,7 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
     }
   }
   
+  @Override
   public void onText(CharSequence text) {
     InputConnection ic = getCurrentInputConnection();
     if (ic == null) return;
@@ -541,17 +538,17 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
     }
     
     Keyboard currentKeyboard = mInputView.getKeyboard();
-    if (mQwertyKeyboard == currentKeyboard || mRuKeyboard == currentKeyboard || mLangSymbolsKeyboard == currentKeyboard) {
+    if (mLatinKeyboard == currentKeyboard || mCyrillicKeyboard == currentKeyboard || mExtCharsKeyboard == currentKeyboard) {
       mInputView.setShifted(mCapsLock || !mInputView.isShifted());
       if (mInputView.capsLock) mInputView.capsLock = false;
     }
     else if (currentKeyboard == mSymbolsKeyboard) {
       mSymbolsKeyboard.setShifted(true);
-      mInputView.setKeyboard(mSymbolsShiftedKeyboard);
-      mSymbolsShiftedKeyboard.setShifted(true);
+      mInputView.setKeyboard(mSymbolsExtKeyboard);
+      mSymbolsExtKeyboard.setShifted(true);
     }
-    else if (currentKeyboard == mSymbolsShiftedKeyboard) {
-      mSymbolsShiftedKeyboard.setShifted(false);
+    else if (currentKeyboard == mSymbolsExtKeyboard) {
+      mSymbolsExtKeyboard.setShifted(false);
       mInputView.setKeyboard(mSymbolsKeyboard);
       mSymbolsKeyboard.setShifted(false);
     }

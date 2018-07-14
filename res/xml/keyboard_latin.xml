@@ -2,9 +2,9 @@
 
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
   android:keyWidth="12.5%p"
+  android:keyHeight="@dimen/key_height"
   android:horizontalGap="0px"
   android:verticalGap="0px"
-  android:keyHeight="@dimen/key_height"
 >
   <Row>
     <Key android:codes="97"  android:keyLabel="a" android:keyEdgeFlags="left"/>
@@ -45,8 +45,8 @@
     <Key android:codes="122" android:keyLabel="z"/>
     <Key android:codes="43"  android:keyLabel="+"/>
     <Key android:codes="45"  android:keyLabel="-"/>
-    <Key android:codes="47"  android:keyLabel="/"/>
     <Key android:codes="42"  android:keyLabel="*"/>
+    <Key android:codes="47"  android:keyLabel="/"/>
     <Key android:codes="-5" android:keyIcon="@drawable/sym_keyboard_delete" android:keyEdgeFlags="right" android:isModifier="true" android:isRepeatable="true"/>
   </Row>
 
