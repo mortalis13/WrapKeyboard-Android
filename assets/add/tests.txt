@@ -1,0 +1,10 @@
+search text
+
+http://stackoverflow.com/questions/categories/java/android/?num=all&action=remove
+
+A text field allows the user to type text into your app. It can be either single line or multi-line. Touching a text field places the cursor and automatically displays the keyboard. In addition to typing, text fields allow for a variety of other activities, such as text selection (cut, copy, paste) and data look-up via auto-completion.
+
+A common slave--you know him well by sight--
+Held up his left hand, which did flame and burn
+Like twenty torches join'd
+

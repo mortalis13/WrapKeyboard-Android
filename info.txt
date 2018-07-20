@@ -1,0 +1,10 @@
+== Start Process ==
+
+WrapKeyboard.onCreate()
+WrapKeyboard.onInitializeInterface()
+WrapKeyboard.onStartInput()
+WrapKeyboard.onCreateInputView()
+WrapKeyboard.onCreateCandidatesView()
+
+WrapKeyboard.onStartInputView()
+WrapKeyboard.onUpdateSelection()
