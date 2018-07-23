@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" 
         package="org.mortalis.wrapkeyboardabc"
-        android:versionCode="107"
+        android:versionCode="108"
         android:versionName="@string/app_version">
     
     <supports-screens
@@ -11,7 +11,8 @@
     
     <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="26" />
     
-    <application android:label="@string/ime_name">
+    <application android:label="@string/ime_name"
+      android:icon="@mipmap/ic_launcher">
       <service android:name=".WrapKeyboard"
                android:permission="android.permission.BIND_INPUT_METHOD">
         <intent-filter>
