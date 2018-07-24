@@ -10,6 +10,6 @@ Soft keyboard for small screens
 
 ## Screenshots
 
-![Image_1](_img/wrapkeyboard-1.png)<br>
-![Image_2](_img/wrapkeyboard-2.png)<br>
+![Image_1](_img/wrapkeyboard-1.png)<br><br>
+![Image_2](_img/wrapkeyboard-2.png)<br><br>
 ![Image_3](_img/wrapkeyboard-3.png)
