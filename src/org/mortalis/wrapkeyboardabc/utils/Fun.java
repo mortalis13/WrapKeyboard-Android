@@ -16,6 +16,8 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+@SuppressWarnings("deprecation")
 public class Fun {
   
   private static Context context;

@@ -1,4 +1,3 @@
-
 package org.mortalis.wrapkeyboardabc;
 
 import java.util.List;
@@ -20,6 +19,7 @@ import android.inputmethodservice.Keyboard.Key;
 import android.inputmethodservice.KeyboardView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+
 
 public class CustomKeyboardView extends KeyboardView {
   

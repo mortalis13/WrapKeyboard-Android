@@ -5,7 +5,7 @@ public class Vars {
   public enum LogLevel {VERBOSE, DEBUG, INFO, WARN, ERROR};
   public static final LogLevel APP_LOG_LEVEL = LogLevel.DEBUG;
   
-  public static final String APP_LOG_TAG = "wrap-keyboard";
+  public static final String APP_LOG_TAG = "wrapkeyboard";
   
   
   public static final int KEY_MOVE_UP = 60002;

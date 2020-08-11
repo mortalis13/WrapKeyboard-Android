@@ -1,4 +1,3 @@
-
 package org.mortalis.wrapkeyboardabc;
 
 import org.mortalis.wrapkeyboardabc.utils.Fun;
@@ -10,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.view.inputmethod.EditorInfo;
 
+
+@SuppressWarnings("deprecation")
 public class CustomKeyboard extends Keyboard {
   
   private Key mEnterKey;

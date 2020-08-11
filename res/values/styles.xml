@@ -1,0 +1,18 @@
+<resources>
+  <style name="SettingsTheme" parent="Theme.AppCompat">
+    <item name="android:windowAnimationStyle">@null</item>
+    
+    <!-- text color for settings name and summary -->
+    <item name="android:textColorSecondary">#f5f5f5</item>
+    <item name="toolbarStyle">@style/SettingsToolbarStyle</item>
+  </style>
+  
+  <style name="SettingsToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
+    <!-- left padding for the settings activity title -->
+    <item name="contentInsetStartWithNavigation">0dp</item>
+    <item name="android:paddingLeft">0dp</item>
+    <!-- <item name="titleMargin">0dp</item> -->
+    <!-- <item name="contentInsetStart">0dp</item> -->
+    <!-- <item name="android:paddingRight">0dp</item> -->
+  </style>
+</resources>

@@ -11,8 +11,10 @@
     
     <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="26" />
     
-    <application android:label="@string/ime_name"
-      android:icon="@mipmap/ic_launcher">
+    <application
+      android:label="@string/ime_name"
+      android:icon="@mipmap/ic_launcher"
+    >
       <service android:name=".WrapKeyboard"
                android:permission="android.permission.BIND_INPUT_METHOD">
         <intent-filter>
@@ -21,10 +23,22 @@
         <meta-data android:name="android.view.im" android:resource="@xml/method" />
       </service>
 
-      <activity android:name=".ImePreferences" android:label="@string/settings_name">
+      <activity
+        android:name=".settings.SettingsActivity"
+        android:label="@string/settings_name"
+        android:theme="@style/SettingsTheme">
         <intent-filter>
           <action android:name="android.intent.action.MAIN"/>
         </intent-filter>
       </activity>
+      
+      <!-- <activity
+        android:name=".ImePreferences"
+        android:label="@string/settings_name">
+        <intent-filter>
+          <action android:name="android.intent.action.MAIN"/>
+        </intent-filter>
+      </activity> -->
+      
     </application>
 </manifest>
