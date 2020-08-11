@@ -1,4 +1,3 @@
-
 package org.mortalis.wrapkeyboardabc;
 
 import java.util.ArrayList;
@@ -25,8 +24,8 @@ import android.view.inputmethod.InputMethodSubtype;
 
 public class WrapKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
   
-  static final boolean DEBUG = false;
-  static final boolean PROCESS_HARD_KEYS = true;
+  private static final boolean DEBUG = false;
+  private static final boolean PROCESS_HARD_KEYS = true;
   
   private InputMethodManager mInputMethodManager;
   
@@ -158,7 +157,6 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
   @Override
   public void onFinishInput() {
     Fun.logd("WrapKeyboard.onFinishInput()");
-    
     super.onFinishInput();
     
     mComposing.setLength(0);
@@ -372,7 +370,8 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
         commitTyped(getCurrentInputConnection());
       }
       
-      sendKey(primaryCode);
+      // sendKey(primaryCode);
+      sendKeyChar((char) primaryCode);
       updateShiftKeyState(getCurrentInputEditorInfo());
     }
     else if (primaryCode == Keyboard.KEYCODE_DELETE) {
