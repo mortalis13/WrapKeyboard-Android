@@ -1,0 +1,124 @@
+
+// Gradle 4.3.1
+// jdk1.8.0_91
+
+apply plugin: 'com.android.application'
+apply plugin: 'eclipse'
+apply plugin: 'com.greensopinion.gradle-android-eclipse'
+
+buildscript {
+  repositories {
+    google()
+    jcenter()
+    mavenLocal()
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.0.1'
+    // classpath "gradle.plugin.com.greensopinion.gradle-android-eclipse:android-eclipse:1.0"
+    classpath "gradle.plugin.com.greensopinion.gradle-android-eclipse:android-eclipse:1.0.2" // offline custom build
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    jcenter()
+    // maven { url 'https://maven.google.com' }
+  }
+}
+
+
+// -- app
+android {
+  compileSdkVersion 26
+  
+  defaultConfig {
+    applicationId "org.mortalis.wrapkeyboardabc"
+    vectorDrawables.useSupportLibrary = true
+    
+    ndk {
+      abiFilters 'armeabi-v7a'
+    }
+  }
+  
+  // -- uncomment to build NDK modules
+  // externalNativeBuild {
+  //   ndkBuild {
+  //     path "jni/Android.mk"
+  //   }
+  // }
+  
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
+  sourceSets {
+    main {
+      manifest.srcFile 'AndroidManifest.xml'
+      java.srcDirs 'src'
+      res.srcDirs 'res'
+      jniLibs.srcDirs 'libs'
+      assets.srcDirs 'assets'
+    }
+
+    instrumentTest.setRoot('tests')
+    debug.setRoot('build-types/debug')
+    release.setRoot('build-types/release')
+  }
+}
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  
+  implementation 'com.android.support:appcompat-v7:27.0.2'
+  implementation 'com.android.support:support-v4:27.0.2'
+  
+  implementation 'com.android.support:support-core-utils:27.0.2'
+  implementation 'com.android.support:recyclerview-v7:27.0.2'
+  implementation 'com.android.support:cardview-v7:27.0.2'
+  
+  implementation 'com.android.support:design:27.0.2'
+  implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+  
+  implementation 'android.arch.lifecycle:extensions:1.1.0'
+  annotationProcessor 'android.arch.lifecycle:compiler:1.1.0'
+  
+  // implementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
+}
+
+task appStart(type: Exec, dependsOn: 'installDebug') {
+  commandLine = ["adb", "shell", "monkey", "-p", "${android.defaultConfig.applicationId} 1"]
+}
+
+task appStartRelease(type: Exec, dependsOn: 'installRelease') {
+  commandLine = ["adb", "shell", "monkey", "-p", "${android.defaultConfig.applicationId} 1"]
+}
+
+
+tasks.withType(JavaCompile) {
+  options.compilerArgs << '-Xlint:deprecation'
+  // options.compilerArgs << '-Xlint:unchecked'
+  // options.deprecation = true
+}
+
+
+// -- generate classpath libs for Eclipse
+androidEclipse {
+  srcDir 'src'
+  aarOutputDir 'exploded-aars'
+}
+
+configurations {
+  androidConfig.extendsFrom implementation
+}
+
+eclipse {
+  classpath {
+    plusConfigurations += [ configurations.androidConfig ]
+    downloadSources = true
+  }
+}
