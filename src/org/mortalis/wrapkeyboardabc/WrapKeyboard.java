@@ -223,36 +223,6 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
     }
   }
   
-  private boolean translateKeyDown(int keyCode, KeyEvent event) {
-    mMetaState = MetaKeyKeyListener.handleKeyDown(mMetaState, keyCode, event);
-    int c = event.getUnicodeChar(MetaKeyKeyListener.getMetaState(mMetaState));
-    mMetaState = MetaKeyKeyListener.adjustMetaAfterKeypress(mMetaState);
-    
-    InputConnection ic = getCurrentInputConnection();
-    if (c == 0 || ic == null) {
-      return false;
-    }
-    
-    boolean dead = false;
-    if ((c & KeyCharacterMap.COMBINING_ACCENT) != 0) {
-      dead = true;
-      c = c & KeyCharacterMap.COMBINING_ACCENT_MASK;
-    }
-    
-    if (mComposing.length() > 0) {
-      char accent = mComposing.charAt(mComposing.length() - 1);
-      int composed = KeyEvent.getDeadChar(accent, c);
-      
-      if (composed != 0) {
-        c = composed;
-        mComposing.setLength(mComposing.length() - 1);
-      }
-    }
-    
-    onKey(c, null);
-    return true;
-  }
-  
   @Override
   public boolean onKeyDown(int keyCode, KeyEvent event) {
     switch (keyCode) {
@@ -314,50 +284,46 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
         mMetaState = MetaKeyKeyListener.handleKeyUp(mMetaState, keyCode, event);
       }
     }
-    
     return super.onKeyUp(keyCode, event);
   }
   
-  private void commitTyped(InputConnection inputConnection) {
-    if (mComposing.length() > 0) {
-      inputConnection.commitText(mComposing, mComposing.length());
-      mComposing.setLength(0);
-      updateCandidates();
-    }
-  }
-  
-  private void updateShiftKeyState(EditorInfo attr) {
-    
-  }
-  
-  private boolean isAlphabet(int code) {
-    if (Character.isLetter(code)) {
+  @Override
+  public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+    if (keyCode == KeyEvent.KEYCODE_BACK) {
       return true;
     }
-    else {
+    return super.onKeyLongPress(keyCode, event);
+  }
+  
+  
+  private boolean translateKeyDown(int keyCode, KeyEvent event) {
+    mMetaState = MetaKeyKeyListener.handleKeyDown(mMetaState, keyCode, event);
+    int c = event.getUnicodeChar(MetaKeyKeyListener.getMetaState(mMetaState));
+    mMetaState = MetaKeyKeyListener.adjustMetaAfterKeypress(mMetaState);
+    
+    InputConnection ic = getCurrentInputConnection();
+    if (c == 0 || ic == null) {
       return false;
     }
-  }
-  
-  private void keyDownUp(int keyEventCode) {
-    getCurrentInputConnection().sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyEventCode));
-    getCurrentInputConnection().sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyEventCode));
-  }
-  
-  private void sendKey(int keyCode) {
-    switch (keyCode) {
-      case '\n':
-        keyDownUp(KeyEvent.KEYCODE_ENTER);
-        break;
-      
-      default:
-        if (keyCode >= '0' && keyCode <= '9') {
-          keyDownUp(keyCode - '0' + KeyEvent.KEYCODE_0);
-        }
-        else {
-          getCurrentInputConnection().commitText(String.valueOf((char) keyCode), 1);
-        }
+    
+    boolean dead = false;
+    if ((c & KeyCharacterMap.COMBINING_ACCENT) != 0) {
+      dead = true;
+      c = c & KeyCharacterMap.COMBINING_ACCENT_MASK;
     }
+    
+    if (mComposing.length() > 0) {
+      char accent = mComposing.charAt(mComposing.length() - 1);
+      int composed = KeyEvent.getDeadChar(accent, c);
+      
+      if (composed != 0) {
+        c = composed;
+        mComposing.setLength(mComposing.length() - 1);
+      }
+    }
+    
+    onKey(c, null);
+    return true;
   }
   
   
@@ -489,27 +455,47 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
     updateShiftKeyState(getCurrentInputEditorInfo());
   }
   
-  private void updateCandidates() {
-    if (!mCompletionOn) {
-      if (mComposing.length() > 0) {
-        ArrayList<String> list = new ArrayList<String>();
-        list.add(mComposing.toString());
-        setSuggestions(list, true, true);
-      }
-      else {
-        setSuggestions(null, false, false);
-      }
+  
+  @Override
+  public void swipeRight() {
+    if (mCompletionOn) {
+      pickDefaultCandidate();
     }
   }
   
-  public void setSuggestions(List<String> suggestions, boolean completions, boolean typedWordValid) {
-    if (suggestions != null && suggestions.size() > 0) {
-      setCandidatesViewShown(true);
-    }
-    else if (isExtractViewShown()) {
-      setCandidatesViewShown(true);
+  @Override
+  public void swipeLeft() {
+    handleBackspace();
+  }
+  
+  @Override
+  public void swipeDown() {
+    handleClose();
+  }
+  
+  @Override
+  public void swipeUp() {
+  }
+  
+  @Override
+  public void onPress(int primaryCode) {
+    mInputView.setPreviewEnabled(false);
+  }
+  
+  @Override
+  public void onRelease(int primaryCode) {
+  }
+  
+  
+  private void commitTyped(InputConnection inputConnection) {
+    if (mComposing.length() > 0) {
+      inputConnection.commitText(mComposing, mComposing.length());
+      mComposing.setLength(0);
+      updateCandidates();
     }
   }
+  
+  private void updateShiftKeyState(EditorInfo attr) {}
   
   private void handleBackspace() {
     final int length = mComposing.length();
@@ -588,13 +574,27 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
     }
   }
   
-  private String getWordSeparators() {
-    return mWordSeparators;
+  
+  private void updateCandidates() {
+    if (!mCompletionOn) {
+      if (mComposing.length() > 0) {
+        ArrayList<String> list = new ArrayList<String>();
+        list.add(mComposing.toString());
+        setSuggestions(list, true, true);
+      }
+      else {
+        setSuggestions(null, false, false);
+      }
+    }
   }
   
-  public boolean isWordSeparator(int code) {
-    String separators = getWordSeparators();
-    return separators.contains(String.valueOf((char) code));
+  public void setSuggestions(List<String> suggestions, boolean completions, boolean typedWordValid) {
+    if (suggestions != null && suggestions.size() > 0) {
+      setCandidatesViewShown(true);
+    }
+    else if (isExtractViewShown()) {
+      setCandidatesViewShown(true);
+    }
   }
   
   public void pickDefaultCandidate() {
@@ -612,39 +612,46 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
     }
   }
   
-  public void swipeRight() {
-    if (mCompletionOn) {
-      pickDefaultCandidate();
-    }
-  }
   
-  public void swipeLeft() {
-    handleBackspace();
-  }
-  
-  public void swipeDown() {
-    handleClose();
-  }
-  
-  public void swipeUp() {
-  }
-  
-  public void onPress(int primaryCode) {
-    mInputView.setPreviewEnabled(false);
-  }
-  
-  public void onRelease(int primaryCode) {
-  }
-  
-  @Override
-  public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-    if (keyCode == KeyEvent.KEYCODE_BACK) {
+  // ------------------------------------ Utils ------------------------------------
+  private boolean isAlphabet(int code) {
+    if (Character.isLetter(code)) {
       return true;
     }
-    
-    return super.onKeyLongPress(keyCode, event);
+    else {
+      return false;
+    }
   }
   
+  private void keyDownUp(int keyEventCode) {
+    getCurrentInputConnection().sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyEventCode));
+    getCurrentInputConnection().sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyEventCode));
+  }
+  
+  private void sendKey(int keyCode) {
+    switch (keyCode) {
+      case '\n':
+        keyDownUp(KeyEvent.KEYCODE_ENTER);
+        break;
+      
+      default:
+        if (keyCode >= '0' && keyCode <= '9') {
+          keyDownUp(keyCode - '0' + KeyEvent.KEYCODE_0);
+        }
+        else {
+          getCurrentInputConnection().commitText(String.valueOf((char) keyCode), 1);
+        }
+    }
+  }
+  
+  private String getWordSeparators() {
+    return mWordSeparators;
+  }
+  
+  public boolean isWordSeparator(int code) {
+    String separators = getWordSeparators();
+    return separators.contains(String.valueOf((char) code));
+  }
   
   private String getKeyboardType(Keyboard keyboard) {
     String result = "";
