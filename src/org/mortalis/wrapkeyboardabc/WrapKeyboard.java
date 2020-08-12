@@ -458,6 +458,7 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
   
   @Override
   public void swipeRight() {
+    Fun.log("swipeRight()");
     if (mCompletionOn) {
       pickDefaultCandidate();
     }
@@ -465,16 +466,19 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
   
   @Override
   public void swipeLeft() {
+    Fun.log("swipeLeft()");
     handleBackspace();
   }
   
   @Override
   public void swipeDown() {
+    Fun.log("swipeDown()");
     handleClose();
   }
   
   @Override
   public void swipeUp() {
+    Fun.log("swipeUp()");
   }
   
   @Override
