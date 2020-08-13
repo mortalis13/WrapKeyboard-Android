@@ -76,30 +76,32 @@ public class CustomKeyboardView extends KeyboardView {
       getOnKeyboardActionListener().onKey(Vars.KEY_LANG_SYMBOLS_KEYBOARD, null);
       return true;
     }
-    else if (key.codes[0] == 'e') {
-      getOnKeyboardActionListener().onKey('é', null);
-      return true;
-    }
-    else if (key.codes[0] == 'u') {
-      getOnKeyboardActionListener().onKey('ú', null);
-      return true;
-    }
-    else if (key.codes[0] == 'i') {
-      getOnKeyboardActionListener().onKey('í', null);
-      return true;
-    }
-    else if (key.codes[0] == 'o') {
-      getOnKeyboardActionListener().onKey('ó', null);
-      return true;
-    }
-    else if (key.codes[0] == 'a') {
-      getOnKeyboardActionListener().onKey('á', null);
-      return true;
-    }
-    else if (key.codes[0] == 'n') {
-      getOnKeyboardActionListener().onKey('ñ', null);
-      return true;
-    }
+    
+    // else if (key.codes[0] == 'e') {
+    //   getOnKeyboardActionListener().onKey('é', null);
+    //   return true;
+    // }
+    // else if (key.codes[0] == 'u') {
+    //   getOnKeyboardActionListener().onKey('ú', null);
+    //   return true;
+    // }
+    // else if (key.codes[0] == 'i') {
+    //   getOnKeyboardActionListener().onKey('í', null);
+    //   return true;
+    // }
+    // else if (key.codes[0] == 'o') {
+    //   getOnKeyboardActionListener().onKey('ó', null);
+    //   return true;
+    // }
+    // else if (key.codes[0] == 'a') {
+    //   getOnKeyboardActionListener().onKey('á', null);
+    //   return true;
+    // }
+    // else if (key.codes[0] == 'n') {
+    //   getOnKeyboardActionListener().onKey('ñ', null);
+    //   return true;
+    // }
+    
     else {
       return super.onLongPress(key);
     }
