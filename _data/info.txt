@@ -8,3 +8,27 @@ WrapKeyboard.onCreateCandidatesView()
 
 WrapKeyboard.onStartInputView()
 WrapKeyboard.onUpdateSelection()
+
+
+== Diacritics
+French
+à, â, æ
+ç
+é, è, ê, ë
+ï, î
+ô, œ
+ù, û, ü
+ÿ
+
+German
+ä ö ü ß
+
+Italian
+à
+è, é
+ì
+ò, ó
+ù
+
+Spanish
+á é í ó ú ü ñ

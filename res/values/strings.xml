@@ -11,10 +11,8 @@
   <string name="label_go_key">Go</string>
   <string name="label_next_key">Next</string>
   <string name="label_send_key">Send</string>
-
-  <!-- Labels for subtype -->
-  <!-- <string name="label_subtype_generic">%s</string> -->
-  <!-- <string name="label_subtype_en_GB">English (GB)</string> -->
+  
+  <string name="alternates_for_a">àâæ</string>
 
   <!-- Titles for ImePreference -->
   <string name="settings_name">Wrap Keyboard Settings</string>
@@ -23,21 +21,25 @@
   <string name="general_category">General</string>
   
   <string name="pref_cat_title_ext_keyboard_type">Extended Keyboard Family</string>
-  <string name="pref_key_ext_type_none">pref_key_ext_type_none</string>
-  <string name="pref_title_ext_type_none">None</string>
-  <string name="pref_summary_ext_type_none"></string>
-  <string name="pref_default_ext_type_none">true</string>
   
+  <string name="pref_key_ext_type_none">pref_key_ext_type_none</string>
+  <string name="pref_key_ext_type_all">pref_key_ext_type_all</string>
   <string name="pref_key_ext_type_french">pref_key_ext_type_french</string>
-  <string name="pref_title_ext_type_french">French</string>
-  <string name="pref_summary_ext_type_french"></string>
-  <string name="pref_default_ext_type_french">false</string>
   <string name="pref_key_ext_type_german">pref_key_ext_type_german</string>
-  <string name="pref_title_ext_type_german">German</string>
-  <string name="pref_summary_ext_type_german"></string>
-  <string name="pref_default_ext_type_german">false</string>
+  <string name="pref_key_ext_type_italian">pref_key_ext_type_italian</string>
   <string name="pref_key_ext_type_spanish">pref_key_ext_type_spanish</string>
+  
+  <string name="pref_title_ext_type_none">None</string>
+  <string name="pref_title_ext_type_all">All</string>
+  <string name="pref_title_ext_type_french">French</string>
+  <string name="pref_title_ext_type_german">German</string>
+  <string name="pref_title_ext_type_italian">Italian</string>
   <string name="pref_title_ext_type_spanish">Spanish</string>
-  <string name="pref_summary_ext_type_spanish"></string>
+  
+  <string name="pref_default_ext_type_none">true</string>
+  <string name="pref_default_ext_type_all">false</string>
+  <string name="pref_default_ext_type_french">false</string>
+  <string name="pref_default_ext_type_german">false</string>
+  <string name="pref_default_ext_type_italian">false</string>
   <string name="pref_default_ext_type_spanish">false</string>
 </resources>

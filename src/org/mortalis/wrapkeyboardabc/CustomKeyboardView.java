@@ -1,6 +1,8 @@
 package org.mortalis.wrapkeyboardabc;
 
 import java.util.List;
+import android.view.View;
+import android.view.LayoutInflater;
 
 import org.mortalis.wrapkeyboardabc.utils.Fun;
 import org.mortalis.wrapkeyboardabc.utils.Vars;
@@ -59,6 +61,8 @@ public class CustomKeyboardView extends KeyboardView {
   
   @Override
   protected boolean onLongPress(Key key) {
+    Fun.log("onLongPress(): " + key);
+    
     if (key.codes[0] == Keyboard.KEYCODE_CANCEL) {
       getOnKeyboardActionListener().onKey(KEYCODE_OPTIONS, null);
       return true;
@@ -76,30 +80,31 @@ public class CustomKeyboardView extends KeyboardView {
       getOnKeyboardActionListener().onKey(Vars.KEY_LANG_SYMBOLS_KEYBOARD, null);
       return true;
     }
-    else if (key.codes[0] == 'e') {
-      getOnKeyboardActionListener().onKey('é', null);
-      return true;
-    }
-    else if (key.codes[0] == 'u') {
-      getOnKeyboardActionListener().onKey('ú', null);
-      return true;
-    }
-    else if (key.codes[0] == 'i') {
-      getOnKeyboardActionListener().onKey('í', null);
-      return true;
-    }
-    else if (key.codes[0] == 'o') {
-      getOnKeyboardActionListener().onKey('ó', null);
-      return true;
-    }
-    else if (key.codes[0] == 'a') {
-      getOnKeyboardActionListener().onKey('á', null);
-      return true;
-    }
-    else if (key.codes[0] == 'n') {
-      getOnKeyboardActionListener().onKey('ñ', null);
-      return true;
-    }
+    
+    // else if (key.codes[0] == 'e') {
+    //   getOnKeyboardActionListener().onKey('é', null);
+    //   return true;
+    // }
+    // else if (key.codes[0] == 'u') {
+    //   getOnKeyboardActionListener().onKey('ú', null);
+    //   return true;
+    // }
+    // else if (key.codes[0] == 'i') {
+    //   getOnKeyboardActionListener().onKey('í', null);
+    //   return true;
+    // }
+    // else if (key.codes[0] == 'o') {
+    //   getOnKeyboardActionListener().onKey('ó', null);
+    //   return true;
+    // }
+    // else if (key.codes[0] == 'a') {
+    //   getOnKeyboardActionListener().onKey('á', null);
+    //   return true;
+    // }
+    // else if (key.codes[0] == 'n') {
+    //   getOnKeyboardActionListener().onKey('ñ', null);
+    //   return true;
+    // }
     else {
       return super.onLongPress(key);
     }
@@ -129,6 +134,38 @@ public class CustomKeyboardView extends KeyboardView {
       }
     }
   }
+  
+  
+  // @Override
+  // public boolean onTouchEvent(MotionEvent me) {
+  //   int action = me.getActionMasked();
+    
+  //   if (action == MotionEvent.ACTION_MOVE) {
+      
+  //   } else {
+  //       switch (action) {
+  //       case MotionEvent.ACTION_DOWN:
+  //       case MotionEvent.ACTION_POINTER_DOWN:
+  //           return super.onTouchEvent(me);
+  //           // break;
+  //       case MotionEvent.ACTION_UP:
+  //       case MotionEvent.ACTION_POINTER_UP:
+  //           // return super.onTouchEvent(me);
+  //           super.onTouchEvent(me);
+            
+  //           LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  //           View mMiniKeyboardContainer = inflater.inflate(R.layout.keyboard_popup_layout, null);
+  //           KeyboardView mMiniKeyboard = (KeyboardView) mMiniKeyboardContainer.findViewById(android.R.id.keyboardView);
+  //           mMiniKeyboard.onClick(mMiniKeyboardContainer);
+            
+  //           break;
+  //       case MotionEvent.ACTION_CANCEL:
+  //           break;
+  //       }
+  //   }
+    
+  //   return true;
+  // }
   
   
   // -------------------------- Swipe -----------------------------
