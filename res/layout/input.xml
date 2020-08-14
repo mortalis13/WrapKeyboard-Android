@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <org.mortalis.wrapkeyboardabc_test.PopupKeyboardView
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:custom="http://schemas.android.com/apk/res/org.mortalis.wrapkeyboardabc_test"
   android:id="@+id/keyboard"
   android:layout_alignParentBottom="true"
   android:layout_width="match_parent"
@@ -8,6 +9,7 @@
   android:padding="0dp"
   android:layout_margin="0dp"
   android:keyBackground="@drawable/key_background"
+  custom:keyBackground="@drawable/key_background"
   android:background="#222"
   android:popupLayout="@layout/keyboard_popup_layout"
 />
