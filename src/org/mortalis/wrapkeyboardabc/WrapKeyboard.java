@@ -3,6 +3,7 @@ package org.mortalis.wrapkeyboardabc;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mortalis.wrapkeyboardabc_test.R;
 import org.mortalis.wrapkeyboardabc.utils.Fun;
 import org.mortalis.wrapkeyboardabc.utils.Vars;
 
@@ -22,14 +23,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 
 
-public class WrapKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
+public class WrapKeyboard extends InputMethodService implements PopupKeyboardView.OnKeyboardActionListener {
   
   private static final boolean DEBUG = false;
   private static final boolean PROCESS_HARD_KEYS = true;
   
   private InputMethodManager mInputMethodManager;
   
-  private CustomKeyboardView mInputView;
+  private PopupKeyboardView mInputView;
   private CompletionInfo[] mCompletions;
   
   private StringBuilder mComposing = new StringBuilder();
@@ -90,7 +91,7 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
   public View onCreateInputView() {
     Fun.logd("WrapKeyboard.onCreateInputView()");
     
-    mInputView = (CustomKeyboardView) getLayoutInflater().inflate(R.layout.input, null);
+    mInputView = (PopupKeyboardView) getLayoutInflater().inflate(R.layout.input, null);
     mInputView.setOnKeyboardActionListener(this);
     mInputView.setKeyboard(mCurLangKeyboard);
     

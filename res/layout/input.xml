@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<org.mortalis.wrapkeyboardabc.CustomKeyboardView
+<org.mortalis.wrapkeyboardabc.PopupKeyboardView
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/keyboard"
   android:layout_alignParentBottom="true"
@@ -11,3 +11,16 @@
   android:background="#222"
   android:popupLayout="@layout/keyboard_popup_layout"
 />
+
+<!-- <org.mortalis.wrapkeyboardabc.CustomKeyboardView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/keyboard"
+  android:layout_alignParentBottom="true"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content" 
+  android:padding="0dp"
+  android:layout_margin="0dp"
+  android:keyBackground="@drawable/key_background"
+  android:background="#222"
+  android:popupLayout="@layout/keyboard_popup_layout"
+/> -->

@@ -4,6 +4,7 @@ import java.util.List;
 import android.view.View;
 import android.view.LayoutInflater;
 
+import org.mortalis.wrapkeyboardabc_test.R;
 import org.mortalis.wrapkeyboardabc.utils.Fun;
 import org.mortalis.wrapkeyboardabc.utils.Vars;
 

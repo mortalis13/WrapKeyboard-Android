@@ -32,6 +32,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 // import com.android.internal.R;
+import org.mortalis.wrapkeyboardabc_test.R;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -42,6 +43,9 @@ import android.inputmethodservice.Keyboard;
 
 
 public class PopupKeyboardView extends View implements View.OnClickListener {
+  
+  static boolean selectionModeEnabled;
+  static boolean capsLock;
 
     /**
      * Listener for virtual keyboard events.

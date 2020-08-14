@@ -1,5 +1,6 @@
 package org.mortalis.wrapkeyboardabc;
 
+import org.mortalis.wrapkeyboardabc_test.R;
 import org.mortalis.wrapkeyboardabc.utils.Fun;
 
 import android.content.Context;
