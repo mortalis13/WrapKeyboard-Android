@@ -1,11 +1,11 @@
-package org.mortalis.wrapkeyboardabc;
+package org.mortalis.wrapkeyboardabc_test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.mortalis.wrapkeyboardabc_test.R;
-import org.mortalis.wrapkeyboardabc.utils.Fun;
-import org.mortalis.wrapkeyboardabc.utils.Vars;
+import org.mortalis.wrapkeyboardabc_test.utils.Fun;
+import org.mortalis.wrapkeyboardabc_test.utils.Vars;
 
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;

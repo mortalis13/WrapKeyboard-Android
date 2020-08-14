@@ -1,4 +1,4 @@
-package org.mortalis.wrapkeyboardabc.settings;
+package org.mortalis.wrapkeyboardabc_test.settings;
 
 import android.content.Context;
 import android.util.AttributeSet;

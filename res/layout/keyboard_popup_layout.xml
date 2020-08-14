@@ -8,7 +8,7 @@
     android:background="#333">
     
     <!-- <android.inputmethodservice.KeyboardView -->
-    <org.mortalis.wrapkeyboardabc.PopupKeyboardView
+    <org.mortalis.wrapkeyboardabc_test.PopupKeyboardView
         android:id="@android:id/keyboardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -36,7 +36,7 @@ android {
   compileSdkVersion 26
   
   defaultConfig {
-    applicationId "org.mortalis.wrapkeyboardabc"
+    applicationId "org.mortalis.wrapkeyboardabc_test"
     vectorDrawables.useSupportLibrary = true
     
     ndk {

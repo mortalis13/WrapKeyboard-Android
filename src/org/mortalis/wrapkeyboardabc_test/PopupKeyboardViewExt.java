@@ -1,9 +1,9 @@
-package org.mortalis.wrapkeyboardabc;
+package org.mortalis.wrapkeyboardabc_test;
 
 import java.util.List;
 
-import org.mortalis.wrapkeyboardabc.utils.Fun;
-import org.mortalis.wrapkeyboardabc.utils.Vars;
+import org.mortalis.wrapkeyboardabc_test.utils.Fun;
+import org.mortalis.wrapkeyboardabc_test.utils.Vars;
 
 import android.content.Context;
 import android.content.res.Resources;

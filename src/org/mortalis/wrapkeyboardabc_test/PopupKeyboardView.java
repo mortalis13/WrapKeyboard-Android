@@ -1,4 +1,4 @@
-package org.mortalis.wrapkeyboardabc;
+package org.mortalis.wrapkeyboardabc_test;
 
 import android.content.Context;
 import android.content.res.TypedArray;
