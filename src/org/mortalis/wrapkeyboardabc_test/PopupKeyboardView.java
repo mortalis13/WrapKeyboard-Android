@@ -243,7 +243,8 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
     public PopupKeyboardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PopupKeyboardView, 0, 0);
+        // TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PopupKeyboardView, 0, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PopupKeyboardView, defStyleAttr, R.style.PopupKeyboardView);
 
         LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -649,6 +650,7 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
         final Key invalidKey = mInvalidatedKey;
 
         paint.setColor(mKeyTextColor);
+        // paint.setColor(0xffffffff);
         boolean drawSingleKey = false;
         if (invalidKey != null && canvas.getClipBounds(clipRegion)) {
           // Is clipRegion completely contained within the invalidated key?
@@ -668,6 +670,8 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
             }
             int[] drawableState = key.getCurrentDrawableState();
             keyBackground.setState(drawableState);
+            // for (int q = 0; q < drawableState.length; q++) Fun.log("drawableState[q]: " + drawableState[q]);
+            // Fun.log(".......");
 
             // Switch the character to uppercase if shift is pressed
             String label = key.label == null? null : adjustCase(key.label).toString();
@@ -692,11 +696,8 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
                 // Draw a drop shadow for the text
                 paint.setShadowLayer(mShadowRadius, 0, 0, mShadowColor);
                 // Draw the text
-                canvas.drawText(label,
-                    (key.width - padding.left - padding.right) / 2
-                            + padding.left,
-                    (key.height - padding.top - padding.bottom) / 2
-                            + (paint.getTextSize() - paint.descent()) / 2 + padding.top,
+                canvas.drawText(label, (key.width - padding.left - padding.right) / 2 + padding.left,
+                    (key.height - padding.top - padding.bottom) / 2 + (paint.getTextSize() - paint.descent()) / 2 + padding.top,
                     paint);
                 // Turn off drop shadow
                 paint.setShadowLayer(0, 0, 0, 0);
@@ -836,26 +837,26 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
         mCurrentKeyIndex = keyIndex;
         // Release the old key and press the new key
         final Key[] keys = mKeys;
-        // if (oldKeyIndex != mCurrentKeyIndex) {
-        //     if (oldKeyIndex != NOT_A_KEY && keys.length > oldKeyIndex) {
-        //         Key oldKey = keys[oldKeyIndex];
-        //         oldKey.onReleased(mCurrentKeyIndex == NOT_A_KEY);
-        //         invalidateKey(oldKeyIndex);
-        //         final int keyCode = oldKey.codes[0];
-        //         sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT, keyCode);
-        //         // TODO: We need to implement AccessibilityNodeProvider for this view.
-        //         sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED, keyCode);
-        //     }
-        //     if (mCurrentKeyIndex != NOT_A_KEY && keys.length > mCurrentKeyIndex) {
-        //         Key newKey = keys[mCurrentKeyIndex];
-        //         newKey.onPressed();
-        //         invalidateKey(mCurrentKeyIndex);
-        //         final int keyCode = newKey.codes[0];
-        //         sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER, keyCode);
-        //         // TODO: We need to implement AccessibilityNodeProvider for this view.
-        //         sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED, keyCode);
-        //     }
-        // }
+        if (oldKeyIndex != mCurrentKeyIndex) {
+            if (oldKeyIndex != NOT_A_KEY && keys.length > oldKeyIndex) {
+                Key oldKey = keys[oldKeyIndex];
+                oldKey.onReleased(mCurrentKeyIndex == NOT_A_KEY);
+                invalidateKey(oldKeyIndex);
+                final int keyCode = oldKey.codes[0];
+                // sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT, keyCode);
+                // TODO: We need to implement AccessibilityNodeProvider for this view.
+                // sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED, keyCode);
+            }
+            if (mCurrentKeyIndex != NOT_A_KEY && keys.length > mCurrentKeyIndex) {
+                Key newKey = keys[mCurrentKeyIndex];
+                newKey.onPressed();
+                invalidateKey(mCurrentKeyIndex);
+                final int keyCode = newKey.codes[0];
+                // sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER, keyCode);
+                // TODO: We need to implement AccessibilityNodeProvider for this view.
+                // sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED, keyCode);
+            }
+        }
         
         // If key changed and preview is on ...
         if (oldKeyIndex != mCurrentKeyIndex && mShowPreview) {

@@ -8,10 +8,11 @@
   android:layout_height="wrap_content" 
   android:padding="0dp"
   android:layout_margin="0dp"
-  android:keyBackground="@drawable/key_background"
-  custom:keyBackground="@drawable/key_background"
   android:background="#222"
-  android:popupLayout="@layout/keyboard_popup_layout"
+  
+  custom:keyBackground="@drawable/key_background"
+  custom:keyTextColor="#fff"
+  custom:popupLayout="@layout/keyboard_popup_layout"
 />
 
 <!-- <org.mortalis.wrapkeyboardabc_test.CustomKeyboardView
