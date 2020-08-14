@@ -76,35 +76,74 @@ public class CustomKeyboardView extends KeyboardView {
       getOnKeyboardActionListener().onKey(Vars.KEY_LANG_SYMBOLS_KEYBOARD, null);
       return true;
     }
-    
-    // else if (key.codes[0] == 'e') {
-    //   getOnKeyboardActionListener().onKey('é', null);
-    //   return true;
-    // }
-    // else if (key.codes[0] == 'u') {
-    //   getOnKeyboardActionListener().onKey('ú', null);
-    //   return true;
-    // }
-    // else if (key.codes[0] == 'i') {
-    //   getOnKeyboardActionListener().onKey('í', null);
-    //   return true;
-    // }
-    // else if (key.codes[0] == 'o') {
-    //   getOnKeyboardActionListener().onKey('ó', null);
-    //   return true;
-    // }
-    // else if (key.codes[0] == 'a') {
-    //   getOnKeyboardActionListener().onKey('á', null);
-    //   return true;
-    // }
-    // else if (key.codes[0] == 'n') {
-    //   getOnKeyboardActionListener().onKey('ñ', null);
-    //   return true;
-    // }
-    
     else {
-      return super.onLongPress(key);
+      if (Fun.getPrefExtType_French()) {
+        if (key.codes[0] == 'c') {
+          getOnKeyboardActionListener().onKey('ç', null);
+          return true;
+        }
+        else if (key.codes[0] == 'y') {
+          getOnKeyboardActionListener().onKey('ÿ', null);
+          return true;
+        }
+      }
+      else if (Fun.getPrefExtType_German()) {
+        if (key.codes[0] == 'a') {
+          getOnKeyboardActionListener().onKey('ä', null);
+          return true;
+        }
+        else if (key.codes[0] == 'o') {
+          getOnKeyboardActionListener().onKey('ö', null);
+          return true;
+        }
+        else if (key.codes[0] == 's') {
+          getOnKeyboardActionListener().onKey('ß', null);
+          return true;
+        }
+        else if (key.codes[0] == 'u') {
+          getOnKeyboardActionListener().onKey('ü', null);
+          return true;
+        }
+      }
+      else if (Fun.getPrefExtType_Italian()) {
+        if (key.codes[0] == 'a') {
+          getOnKeyboardActionListener().onKey('à', null);
+          return true;
+        }
+        else if (key.codes[0] == 'i') {
+          getOnKeyboardActionListener().onKey('ì', null);
+          return true;
+        }
+        else if (key.codes[0] == 'u') {
+          getOnKeyboardActionListener().onKey('ù', null);
+          return true;
+        }
+      }
+      else if (Fun.getPrefExtType_Spanish()) {
+        if (key.codes[0] == 'a') {
+          getOnKeyboardActionListener().onKey('á', null);
+          return true;
+        }
+        else if (key.codes[0] == 'e') {
+          getOnKeyboardActionListener().onKey('é', null);
+          return true;
+        }
+        else if (key.codes[0] == 'i') {
+          getOnKeyboardActionListener().onKey('í', null);
+          return true;
+        }
+        else if (key.codes[0] == 'o') {
+          getOnKeyboardActionListener().onKey('ó', null);
+          return true;
+        }
+        else if (key.codes[0] == 'n') {
+          getOnKeyboardActionListener().onKey('ñ', null);
+          return true;
+        }
+      }
     }
+    
+    return super.onLongPress(key);
   }
   
   // --- Uncomment to override and disable key resize 

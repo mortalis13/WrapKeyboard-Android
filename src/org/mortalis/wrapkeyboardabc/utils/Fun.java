@@ -1,5 +1,7 @@
 package org.mortalis.wrapkeyboardabc.utils;
 
+import org.mortalis.wrapkeyboardabc.R;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,6 +17,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 
 @SuppressWarnings("deprecation")
@@ -77,6 +81,22 @@ public class Fun {
   public static int getDimension(int resourceId) {
     if (context == null) return 0;
     return (int) context.getResources().getDimension(resourceId);
+  }
+  
+  
+  public static String getPrefString(String key, String defaultValue) {
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    return sharedPreferences.getString(key, defaultValue);
+  }
+  
+  public static int getPrefInt(String key, int defaultValue) {
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    return sharedPreferences.getInt(key, defaultValue);
+  }
+  
+  public static boolean getPrefBool(String key, boolean defaultValue) {
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    return sharedPreferences.getBoolean(key, defaultValue);
   }
   
   
@@ -299,6 +319,38 @@ public class Fun {
     logd("// Fun.readBinFile()");
     
     return result;
+  }
+  
+  //---------------------------------------------- App Utils ----------------------------------------------
+  
+  public static boolean getPrefExtType_None() {
+    String key = getString(R.string.pref_key_ext_type_none);
+    return getPrefBool(key, false);
+  }
+  
+  public static boolean getPrefExtType_All() {
+    String key = getString(R.string.pref_key_ext_type_all);
+    return getPrefBool(key, false);
+  }
+  
+  public static boolean getPrefExtType_French() {
+    String key = getString(R.string.pref_key_ext_type_french);
+    return getPrefBool(key, false);
+  }
+  
+  public static boolean getPrefExtType_German() {
+    String key = getString(R.string.pref_key_ext_type_german);
+    return getPrefBool(key, false);
+  }
+  
+  public static boolean getPrefExtType_Italian() {
+    String key = getString(R.string.pref_key_ext_type_italian);
+    return getPrefBool(key, false);
+  }
+  
+  public static boolean getPrefExtType_Spanish() {
+    String key = getString(R.string.pref_key_ext_type_spanish);
+    return getPrefBool(key, false);
   }
   
 }

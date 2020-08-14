@@ -9,9 +9,21 @@
       android:widgetLayout="@layout/preference_widget_radiobutton"
     />
     <org.mortalis.wrapkeyboardabc.settings.RadioButtonPreference
+      android:key="@string/pref_key_ext_type_all"
+      android:title="@string/pref_title_ext_type_all"
+      android:defaultValue="@string/pref_default_ext_type_all"
+      android:widgetLayout="@layout/preference_widget_radiobutton"
+    />
+    <org.mortalis.wrapkeyboardabc.settings.RadioButtonPreference
       android:key="@string/pref_key_ext_type_french"
       android:title="@string/pref_title_ext_type_french"
       android:defaultValue="@string/pref_default_ext_type_french"
+      android:widgetLayout="@layout/preference_widget_radiobutton"
+    />
+    <org.mortalis.wrapkeyboardabc.settings.RadioButtonPreference
+      android:key="@string/pref_key_ext_type_italian"
+      android:title="@string/pref_title_ext_type_italian"
+      android:defaultValue="@string/pref_default_ext_type_italian"
       android:widgetLayout="@layout/preference_widget_radiobutton"
     />
     <org.mortalis.wrapkeyboardabc.settings.RadioButtonPreference
