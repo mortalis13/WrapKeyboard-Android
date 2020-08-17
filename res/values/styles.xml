@@ -21,7 +21,7 @@
     <!-- <item name="android:background">@drawable/keyboard_background</item> -->
 
     <item name="keyBackground">@drawable/key_background</item>
-    <item name="keyTextSize">20dp</item>
+    <item name="keyTextSize">22dp</item>
     <item name="keyTextColor">#FFFFFFFF</item>
     <item name="keyHintColor">#FF222222</item>
     <item name="keyCursorColor">#FFBBBBBB</item>

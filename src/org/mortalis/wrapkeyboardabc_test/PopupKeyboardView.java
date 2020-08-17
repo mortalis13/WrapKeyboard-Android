@@ -34,6 +34,11 @@ import android.widget.TextView;
 // import com.android.internal.R;
 import org.mortalis.wrapkeyboardabc_test.R;
 import org.mortalis.wrapkeyboardabc_test.utils.Fun;
+import org.mortalis.wrapkeyboardabc_test.utils.Vars;
+
+import android.graphics.Color;
+import android.graphics.BitmapFactory;
+import android.os.SystemClock;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -43,10 +48,17 @@ import java.util.Map;
 import android.inputmethodservice.Keyboard;
 
 
+@SuppressWarnings("deprecation")
 public class PopupKeyboardView extends View implements View.OnClickListener {
+  
+  static final int KEYCODE_OPTIONS = -100;
   
   static boolean selectionModeEnabled;
   static boolean capsLock;
+  
+  private Bitmap bitmapShift, bitmapSelect;
+  private Rect shiftRect, selectRect;
+  private Paint specKeyPaint;
 
     /**
      * Listener for virtual keyboard events.
@@ -105,6 +117,7 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
          * Called when the user quickly moves the finger from down to up.
          */
         void swipeUp();
+        
     }
 
     private static final boolean DEBUG = false;
@@ -332,36 +345,54 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
         // mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
         resetMultiTap();
+        
+        init();
     }
+    
+    public void init() {
+      specKeyPaint = new Paint();
+      specKeyPaint.setTextAlign(Paint.Align.CENTER);
+      specKeyPaint.setTextSize(25);
+      specKeyPaint.setColor(Color.YELLOW);
+      
+      bitmapShift = BitmapFactory.decodeResource(getResources(), R.drawable.capson);
+      shiftRect = new Rect(0, 0, bitmapShift.getWidth(), bitmapShift.getHeight());
+      
+      bitmapSelect = BitmapFactory.decodeResource(getResources(), R.drawable.selection_mode);
+      selectRect = new Rect(0, 0, bitmapSelect.getWidth(), bitmapSelect.getHeight());
+      
+      
+      initGestureDetector();
+      if (mHandler == null) {
+          mHandler = new Handler() {
+              @Override
+              public void handleMessage(Message msg) {
+                  switch (msg.what) {
+                      case MSG_SHOW_PREVIEW:
+                          showKey(msg.arg1);
+                          break;
+                      case MSG_REMOVE_PREVIEW:
+                          mPreviewText.setVisibility(INVISIBLE);
+                          break;
+                      case MSG_REPEAT:
+                          if (repeatKey()) {
+                              Message repeat = Message.obtain(this, MSG_REPEAT);
+                              sendMessageDelayed(repeat, REPEAT_INTERVAL);
+                          }
+                          break;
+                      case MSG_LONGPRESS:
+                          openPopupIfRequired((MotionEvent) msg.obj);
+                          break;
+                  }
+              }
+          };
+      }
+    }
+    
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        initGestureDetector();
-        if (mHandler == null) {
-            mHandler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    switch (msg.what) {
-                        case MSG_SHOW_PREVIEW:
-                            showKey(msg.arg1);
-                            break;
-                        case MSG_REMOVE_PREVIEW:
-                            mPreviewText.setVisibility(INVISIBLE);
-                            break;
-                        case MSG_REPEAT:
-                            if (repeatKey()) {
-                                Message repeat = Message.obtain(this, MSG_REPEAT);
-                                sendMessageDelayed(repeat, REPEAT_INTERVAL);
-                            }
-                            break;
-                        case MSG_LONGPRESS:
-                            openPopupIfRequired((MotionEvent) msg.obj);
-                            break;
-                    }
-                }
-            };
-        }
     }
 
     private void initGestureDetector() {
@@ -620,6 +651,20 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
             onBufferDraw();
         }
         canvas.drawBitmap(mBuffer, 0, 0, null);
+        
+        // ---
+        List<Key> keys = getKeyboard().getKeys();
+        for (Key key: keys) {
+          if (key.codes[0] == Keyboard.KEYCODE_SHIFT && capsLock) {
+            Rect dist = new Rect(key.x, key.y, key.x + key.width, key.y + key.height);
+            canvas.drawBitmap(bitmapShift, shiftRect, dist, specKeyPaint);
+          }
+          
+          if (key.codes[0] == Vars.KEY_SELECT && selectionModeEnabled) {
+            Rect dist = new Rect(key.x, key.y, key.x + key.width, key.y + key.height);
+            canvas.drawBitmap(bitmapSelect, selectRect, dist, specKeyPaint);
+          }
+        }
     }
 
     private void onBufferDraw() {
@@ -1045,18 +1090,20 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
      * method on the base class if the subclass doesn't wish to handle the call.
      */
     protected boolean onLongPress(Key popupKey) {
+        if (handleLongPress_Custom(popupKey)) return true;
+        
         int popupKeyboardId = popupKey.popupResId;
 
         if (popupKeyboardId != 0) {
             mMiniKeyboardContainer = mMiniKeyboardCache.get(popupKey);
             if (mMiniKeyboardContainer == null) {
-                LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
-                        Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 mMiniKeyboardContainer = inflater.inflate(mPopupLayout, null);
                 // mMiniKeyboard = (PopupKeyboardView) mMiniKeyboardContainer.findViewById(R.id.keyboardView);
                 mMiniKeyboard = (PopupKeyboardView) mMiniKeyboardContainer.findViewById(android.R.id.keyboardView);
                 // View closeButton = mMiniKeyboardContainer.findViewById(R.id.closeButton);
                 // if (closeButton != null) closeButton.setOnClickListener(this);
+                
                 mMiniKeyboard.setOnKeyboardActionListener(new OnKeyboardActionListener() {
                     public void onKey(int primaryCode, int[] keyCodes) {
                         mKeyboardActionListener.onKey(primaryCode, keyCodes);
@@ -1079,14 +1126,15 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
                         mKeyboardActionListener.onRelease(primaryCode);
                     }
                 });
+                
                 //mInputView.setSuggest(mSuggest);
                 Keyboard keyboard;
                 if (popupKey.popupCharacters != null) {
-                    keyboard = new Keyboard(getContext(), popupKeyboardId,
-                            popupKey.popupCharacters, -1, getPaddingLeft() + getPaddingRight());
+                    keyboard = new Keyboard(getContext(), popupKeyboardId, popupKey.popupCharacters, -1, getPaddingLeft() + getPaddingRight());
                 } else {
                     keyboard = new Keyboard(getContext(), popupKeyboardId);
                 }
+                
                 mMiniKeyboard.setKeyboard(keyboard);
                 mMiniKeyboard.setPopupParent(this);
                 mMiniKeyboardContainer.measure(
@@ -1098,6 +1146,7 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
                 // mMiniKeyboard = (PopupKeyboardView) mMiniKeyboardContainer.findViewById(R.id.keyboardView);
                 mMiniKeyboard = (PopupKeyboardView) mMiniKeyboardContainer.findViewById(android.R.id.keyboardView);
             }
+            
             getLocationInWindow(mCoordinates);
             mPopupX = popupKey.x + getPaddingLeft();
             mPopupY = popupKey.y + getPaddingTop();
@@ -1107,17 +1156,59 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
             final int y = mPopupY + mMiniKeyboardContainer.getPaddingBottom() + mCoordinates[1];
             mMiniKeyboard.setPopupOffset(x < 0 ? 0 : x, y);
             mMiniKeyboard.setShifted(isShifted());
+            
+            mMiniKeyboard.setPreviewEnabled(false);
             mPopupKeyboard.setContentView(mMiniKeyboardContainer);
             mPopupKeyboard.setWidth(mMiniKeyboardContainer.getMeasuredWidth());
             mPopupKeyboard.setHeight(mMiniKeyboardContainer.getMeasuredHeight());
             mPopupKeyboard.showAtLocation(this, Gravity.NO_GRAVITY, x, y);
             mMiniKeyboardOnScreen = true;
-            //mMiniKeyboard.onTouchEvent(getTranslatedEvent(me));
+            
+            // mMiniKeyboard.onTouchEvent(getTranslatedEvent(me));
+            
+            // -------- Inject down event on the key to mini keyboard.
+            long eventTime = SystemClock.uptimeMillis();
+            int eX = popupKey.width / 2;
+            int eY = popupKey.height / 2;
+            eX = popupKey.x + popupKey.width / 2 - (x>0?x:0);
+            eY = 0;
+            
+            // Fun.log(String.format("x, popupKey.x: [%d,%d]", x, popupKey.x));
+            // Fun.log(String.format("eX, eY: [%d,%d]", eX, eY));
+            
+            MotionEvent downEvent = MotionEvent.obtain(eventTime, eventTime, MotionEvent.ACTION_DOWN, eX, eY, 0);
+            // mMiniKeyboard.onTouchEvent(downEvent);
+            mMiniKeyboard.dispatchTouchEvent(downEvent);
+            downEvent.recycle();
+            
             invalidateAllKeys();
             return true;
         }
+        
         return false;
     }
+    
+    private boolean handleLongPress_Custom(Key key) {
+      if (key.codes[0] == Keyboard.KEYCODE_CANCEL) {
+        getOnKeyboardActionListener().onKey(KEYCODE_OPTIONS, null);
+        return true;
+      }
+      else if (key.codes[0] == Keyboard.KEYCODE_SHIFT) {
+        setShifted(!capsLock);
+        capsLock = !capsLock;
+        return true;
+      }
+      else if (key.codes[0] == Keyboard.KEYCODE_MODE_CHANGE) {
+        getOnKeyboardActionListener().onKey(Vars.KEY_OPEN_TEXT_EDIT_KEYBOARD, null);
+        return true;
+      }
+      else if (key.codes[0] == Vars.KEY_SWITCH_LANG_KEYBOARD) {
+        getOnKeyboardActionListener().onKey(Vars.KEY_LANG_SYMBOLS_KEYBOARD, null);
+        return true;
+      }
+      return false;
+    }
+    
 
     // @Override
     // public boolean onHoverEvent(MotionEvent event) {
@@ -1148,21 +1239,22 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
         boolean result = false;
         final long now = me.getEventTime();
 
+        // Fun.log("..onTouchEvent.action: " + action);
+
         if (pointerCount != mOldPointerCount) {
             if (pointerCount == 1) {
                 // Send a down event for the latest pointer
-                MotionEvent down = MotionEvent.obtain(now, now, MotionEvent.ACTION_DOWN,
-                        me.getX(), me.getY(), me.getMetaState());
+                MotionEvent down = MotionEvent.obtain(now, now, MotionEvent.ACTION_DOWN, me.getX(), me.getY(), me.getMetaState());
                 result = onModifiedTouchEvent(down, false);
                 down.recycle();
                 // If it's an up action, then deliver the up as well.
                 if (action == MotionEvent.ACTION_UP) {
                     result = onModifiedTouchEvent(me, true);
                 }
-            } else {
+            }
+            else {
                 // Send an up event for the last pointer
-                MotionEvent up = MotionEvent.obtain(now, now, MotionEvent.ACTION_UP,
-                        mOldPointerX, mOldPointerY, me.getMetaState());
+                MotionEvent up = MotionEvent.obtain(now, now, MotionEvent.ACTION_UP, mOldPointerX, mOldPointerY, me.getMetaState());
                 result = onModifiedTouchEvent(up, true);
                 up.recycle();
             }
@@ -1180,8 +1272,10 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
 
         return result;
     }
-
+    
     private boolean onModifiedTouchEvent(MotionEvent me, boolean possiblePoly) {
+        final int pointerCount = me.getPointerCount();
+        
         int touchX = (int) me.getX() - getPaddingLeft();
         int touchY = (int) me.getY() - getPaddingTop();
         if (touchY >= -mVerticalCorrection)
@@ -1195,13 +1289,16 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
         if (action == MotionEvent.ACTION_DOWN) mSwipeTracker.clear();
         mSwipeTracker.addMovement(me);
 
-        // Ignore all motion events until a DOWN.
-        if (mAbortKey
-                && action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_CANCEL) {
-            return true;
+        if (action == MotionEvent.ACTION_UP) {
+          // dismissPopupKeyboard();
         }
+        
+        // Ignore all motion events until a DOWN.
+        // if (mAbortKey && action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_CANCEL) {
+        //     return true;
+        // }
 
-        if (mGestureDetector.onTouchEvent(me)) {
+        if (mGestureDetector != null && mGestureDetector.onTouchEvent(me)) {
             showPreview(NOT_A_KEY);
             mHandler.removeMessages(MSG_REPEAT);
             mHandler.removeMessages(MSG_LONGPRESS);
@@ -1210,10 +1307,51 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
 
         // Needs to be called after the gesture detector gets a turn, as it may have
         // displayed the mini keyboard
-        if (mMiniKeyboardOnScreen && action != MotionEvent.ACTION_CANCEL) {
+        // if (mMiniKeyboardOnScreen && action != MotionEvent.ACTION_CANCEL) {
+        //     return true;
+        // }
+        
+        // Fun.log("..mGestureDetector: " + mGestureDetector);
+        // Fun.log("..mHandler: " + mHandler);
+        // Fun.log("..action: " + action + " [" + this.hashCode() + "]");
+        // Fun.log("..me: " + me);
+        // Fun.log("..mMiniKeyboardOnScreen: " + mMiniKeyboardOnScreen);
+        
+        if (mMiniKeyboardOnScreen) {
+            final int miniKeyboardPointerIndex = me.findPointerIndex(0);
+            if (miniKeyboardPointerIndex >= 0 && miniKeyboardPointerIndex < pointerCount) {
+                final int miniKeyboardX = (int) me.getX(miniKeyboardPointerIndex);
+                final int miniKeyboardY = (int) me.getY(miniKeyboardPointerIndex);
+                
+                int[] cs = new int[2];
+                mMiniKeyboardContainer.getLocationOnScreen(cs);
+                
+                int[] tcs = new int[2];
+                getLocationOnScreen(tcs);
+                
+                int miniX = cs[0] - tcs[0];
+                int miniY = cs[1] - tcs[1];
+                miniY = miniY < 0 ? 0: miniY;
+                
+                int eX = (int) me.getX() + mMiniKeyboardContainer.getPaddingLeft() - miniX;
+                int eY = (int) me.getY() + mMiniKeyboardContainer.getPaddingTop() - miniY;
+                eX = eX < 0 ? 0: eX;
+                eY = eY < 0 ? 0: eY;
+                eY = 0;
+                MotionEvent translated = MotionEvent.obtain(eventTime, eventTime, action, eX, eY, me.getMetaState());
+                
+                // Fun.log( String.format("..popup: XY: [%d,%d], WH: [%d,%d]", cs[0], cs[1], mPopupKeyboard.getWidth(), mPopupKeyboard.getHeight()) );
+                // Fun.log(String.format("eX, eY: [%d,%d]", eX, eY));
+                // Fun.log(String.format("me: [%d,%d]", (int) me.getX(), (int) me.getY()));
+                // Fun.log("..translated: " + translated);
+                
+                // mMiniKeyboard.onTouchEvent(translated);
+                mMiniKeyboard.dispatchTouchEvent(translated);
+                translated.recycle();
+            }
             return true;
         }
-
+        
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 mAbortKey = false;
@@ -1229,8 +1367,8 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
                 mDownTime = me.getEventTime();
                 mLastMoveTime = mDownTime;
                 checkMultiTap(eventTime, keyIndex);
-                mKeyboardActionListener.onPress(keyIndex != NOT_A_KEY ?
-                        mKeys[keyIndex].codes[0] : 0);
+                mKeyboardActionListener.onPress(keyIndex != NOT_A_KEY ? mKeys[keyIndex].codes[0] : 0);
+                
                 if (mCurrentKey >= 0 && mKeys[mCurrentKey].repeatable) {
                     mRepeatKeyIndex = mCurrentKey;
                     Message msg = mHandler.obtainMessage(MSG_REPEAT);
@@ -1264,8 +1402,7 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
                             mLastKey = mCurrentKey;
                             mLastCodeX = mLastX;
                             mLastCodeY = mLastY;
-                            mLastKeyTime =
-                                    mCurrentKeyTime + eventTime - mLastMoveTime;
+                            mLastKeyTime = mCurrentKeyTime + eventTime - mLastMoveTime;
                             mCurrentKey = keyIndex;
                             mCurrentKeyTime = 0;
                         }
@@ -1295,8 +1432,7 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
                     mCurrentKey = keyIndex;
                     mCurrentKeyTime = 0;
                 }
-                if (mCurrentKeyTime < mLastKeyTime && mCurrentKeyTime < DEBOUNCE_TIME
-                        && mLastKey != NOT_A_KEY) {
+                if (mCurrentKeyTime < mLastKeyTime && mCurrentKeyTime < DEBOUNCE_TIME && mLastKey != NOT_A_KEY) {
                     mCurrentKey = mLastKey;
                     touchX = mLastCodeX;
                     touchY = mLastCodeY;
@@ -1307,6 +1443,7 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
                 if (mRepeatKeyIndex == NOT_A_KEY && !mMiniKeyboardOnScreen && !mAbortKey) {
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime);
                 }
+                
                 invalidateKey(keyIndex);
                 mRepeatKeyIndex = NOT_A_KEY;
                 break;
@@ -1318,6 +1455,7 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
                 invalidateKey(mCurrentKey);
                 break;
         }
+        
         mLastX = touchX;
         mLastY = touchY;
         return true;
