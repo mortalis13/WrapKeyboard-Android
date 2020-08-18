@@ -12,7 +12,8 @@
   <string name="label_next_key">Next</string>
   <string name="label_send_key">Send</string>
   
-  <string name="alternates_for_a">áàâãäåæα</string>
+  
+  <string name="alternates_for_a">áàâãäāåąæα</string>
   <string name="alternates_for_b">β</string>
   <string name="alternates_for_c">çčćĉ¢</string>
   <string name="alternates_for_d">ðđδ</string>
