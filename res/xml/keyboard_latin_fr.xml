@@ -7,12 +7,12 @@
   android:verticalGap="0px"
 >
   <Row>
-    <Key android:codes="97"  android:keyLabel="a" android:popupKeyboard="@xml/kbd_popup_template"
+    <Key android:codes="97"  android:keyLabel="a" android:popupKeyboard="@xml/keyboard_popup_template"
       android:popupCharacters="@string/fr_alternates_for_a" android:keyEdgeFlags="left"/>
     <Key android:codes="98"  android:keyLabel="b"/>
     <Key android:codes="99"  android:keyLabel="c"/>
     <Key android:codes="100" android:keyLabel="d"/>
-    <Key android:codes="101" android:keyLabel="e" android:popupKeyboard="@xml/kbd_popup_template"
+    <Key android:codes="101" android:keyLabel="e" android:popupKeyboard="@xml/keyboard_popup_template"
       android:popupCharacters="@string/fr_alternates_for_e"/>
     <Key android:codes="102" android:keyLabel="f"/>
     <Key android:codes="103" android:keyLabel="g"/>
@@ -20,14 +20,14 @@
   </Row>
 
   <Row>
-    <Key android:codes="105" android:keyLabel="i" android:popupKeyboard="@xml/kbd_popup_template"
+    <Key android:codes="105" android:keyLabel="i" android:popupKeyboard="@xml/keyboard_popup_template"
       android:popupCharacters="@string/fr_alternates_for_i" android:keyEdgeFlags="left"/>
     <Key android:codes="106" android:keyLabel="j"/>
     <Key android:codes="107" android:keyLabel="k"/>
     <Key android:codes="108" android:keyLabel="l"/>
     <Key android:codes="109" android:keyLabel="m"/>
     <Key android:codes="110" android:keyLabel="n"/>
-    <Key android:codes="111" android:keyLabel="o" android:popupKeyboard="@xml/kbd_popup_template"
+    <Key android:codes="111" android:keyLabel="o" android:popupKeyboard="@xml/keyboard_popup_template"
       android:popupCharacters="@string/fr_alternates_for_o"/>
     <Key android:codes="112" android:keyLabel="p" android:keyEdgeFlags="right" />
   </Row>
@@ -37,7 +37,7 @@
     <Key android:codes="114" android:keyLabel="r"/>
     <Key android:codes="115" android:keyLabel="s"/>
     <Key android:codes="116" android:keyLabel="t"/>
-    <Key android:codes="117" android:keyLabel="u" android:popupKeyboard="@xml/kbd_popup_template"
+    <Key android:codes="117" android:keyLabel="u" android:popupKeyboard="@xml/keyboard_popup_template"
       android:popupCharacters="@string/fr_alternates_for_u"/>
     <Key android:codes="118" android:keyLabel="v"/>
     <Key android:codes="119" android:keyLabel="w"/>
