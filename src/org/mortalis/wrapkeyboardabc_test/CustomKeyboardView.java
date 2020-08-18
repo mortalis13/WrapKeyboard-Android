@@ -49,7 +49,7 @@ import android.inputmethodservice.Keyboard;
 
 
 @SuppressWarnings("deprecation")
-public class PopupKeyboardView extends View implements View.OnClickListener {
+public class CustomKeyboardView extends View implements View.OnClickListener {
   
   static final int KEYCODE_OPTIONS = -100;
   
@@ -144,7 +144,7 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
 
     private PopupWindow mPopupKeyboard;
     private View mMiniKeyboardContainer;
-    private PopupKeyboardView mMiniKeyboard;
+    private CustomKeyboardView mMiniKeyboard;
     private boolean mMiniKeyboardOnScreen;
     private View mPopupParent;
     private int mMiniKeyboardOffsetX;
@@ -249,15 +249,15 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
 
     Handler mHandler;
 
-    public PopupKeyboardView(Context context, AttributeSet attrs) {
+    public CustomKeyboardView(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.keyboardViewStyle);
     }
 
-    public PopupKeyboardView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomKeyboardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        // TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PopupKeyboardView, 0, 0);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PopupKeyboardView, defStyleAttr, R.style.PopupKeyboardView);
+        // TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CustomKeyboardView, 0, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CustomKeyboardView, defStyleAttr, R.style.CustomKeyboardView);
 
         LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -269,40 +269,40 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
         for (int i = 0; i < n; i++) {
             int attr = a.getIndex(i);
             switch (attr) {
-            case R.styleable.PopupKeyboardView_keyBackground:
+            case R.styleable.CustomKeyboardView_keyBackground:
                 mKeyBackground = a.getDrawable(attr);
                 break;
-            case R.styleable.PopupKeyboardView_verticalCorrection:
+            case R.styleable.CustomKeyboardView_verticalCorrection:
                 mVerticalCorrection = a.getDimensionPixelOffset(attr, 0);
                 break;
-            case R.styleable.PopupKeyboardView_keyPreviewLayout:
+            case R.styleable.CustomKeyboardView_keyPreviewLayout:
                 previewLayout = a.getResourceId(attr, 0);
                 break;
-            case R.styleable.PopupKeyboardView_keyPreviewOffset:
+            case R.styleable.CustomKeyboardView_keyPreviewOffset:
                 mPreviewOffset = a.getDimensionPixelOffset(attr, 0);
                 break;
-            case R.styleable.PopupKeyboardView_keyPreviewHeight:
+            case R.styleable.CustomKeyboardView_keyPreviewHeight:
                 mPreviewHeight = a.getDimensionPixelSize(attr, 80);
                 break;
-            case R.styleable.PopupKeyboardView_keyTextSize:
+            case R.styleable.CustomKeyboardView_keyTextSize:
                 mKeyTextSize = a.getDimensionPixelSize(attr, 18);
                 break;
-            case R.styleable.PopupKeyboardView_keyTextColor:
+            case R.styleable.CustomKeyboardView_keyTextColor:
                 mKeyTextColor = a.getColor(attr, 0xFF000000);
                 break;
-            case R.styleable.PopupKeyboardView_labelTextSize:
+            case R.styleable.CustomKeyboardView_labelTextSize:
                 mLabelTextSize = a.getDimensionPixelSize(attr, 14);
                 break;
-            case R.styleable.PopupKeyboardView_popupLayout:
+            case R.styleable.CustomKeyboardView_popupLayout:
                 mPopupLayout = a.getResourceId(attr, 0);
                 break;
-            case R.styleable.PopupKeyboardView_shadowColor:
+            case R.styleable.CustomKeyboardView_shadowColor:
                 mShadowColor = a.getColor(attr, 0);
                 break;
-            case R.styleable.PopupKeyboardView_shadowRadius:
+            case R.styleable.CustomKeyboardView_shadowRadius:
                 mShadowRadius = a.getFloat(attr, 0f);
                 break;
-            case R.styleable.PopupKeyboardView_backgroundDimAmount:
+            case R.styleable.CustomKeyboardView_backgroundDimAmount:
                 mBackgroundDimAmount = a.getFloat(attr, 0.5f);
                 break;
             }
@@ -1099,8 +1099,8 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
             if (mMiniKeyboardContainer == null) {
                 LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 mMiniKeyboardContainer = inflater.inflate(mPopupLayout, null);
-                // mMiniKeyboard = (PopupKeyboardView) mMiniKeyboardContainer.findViewById(R.id.keyboardView);
-                mMiniKeyboard = (PopupKeyboardView) mMiniKeyboardContainer.findViewById(android.R.id.keyboardView);
+                // mMiniKeyboard = (CustomKeyboardView) mMiniKeyboardContainer.findViewById(R.id.keyboardView);
+                mMiniKeyboard = (CustomKeyboardView) mMiniKeyboardContainer.findViewById(android.R.id.keyboardView);
                 // View closeButton = mMiniKeyboardContainer.findViewById(R.id.closeButton);
                 // if (closeButton != null) closeButton.setOnClickListener(this);
                 
@@ -1143,8 +1143,8 @@ public class PopupKeyboardView extends View implements View.OnClickListener {
 
                 mMiniKeyboardCache.put(popupKey, mMiniKeyboardContainer);
             } else {
-                // mMiniKeyboard = (PopupKeyboardView) mMiniKeyboardContainer.findViewById(R.id.keyboardView);
-                mMiniKeyboard = (PopupKeyboardView) mMiniKeyboardContainer.findViewById(android.R.id.keyboardView);
+                // mMiniKeyboard = (CustomKeyboardView) mMiniKeyboardContainer.findViewById(R.id.keyboardView);
+                mMiniKeyboard = (CustomKeyboardView) mMiniKeyboardContainer.findViewById(android.R.id.keyboardView);
             }
             
             getLocationInWindow(mCoordinates);

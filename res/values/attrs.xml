@@ -16,7 +16,7 @@
 
 <resources>
 
-    <declare-styleable name="PopupKeyboardView">
+    <declare-styleable name="CustomKeyboardView">
         <!-- Default KeyboardView style. -->
         <attr name="keyboardViewStyle" format="reference" />
 

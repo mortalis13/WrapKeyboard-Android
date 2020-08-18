@@ -17,7 +17,7 @@
   </style>
   
   
-  <style name="PopupKeyboardView">
+  <style name="CustomKeyboardView">
     <!-- <item name="android:background">@drawable/keyboard_background</item> -->
 
     <item name="keyBackground">@drawable/key_background</item>

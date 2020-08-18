@@ -23,14 +23,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 
 
-public class WrapKeyboard extends InputMethodService implements PopupKeyboardView.OnKeyboardActionListener {
+public class WrapKeyboard extends InputMethodService implements CustomKeyboardView.OnKeyboardActionListener {
   
   private static final boolean DEBUG = false;
   private static final boolean PROCESS_HARD_KEYS = true;
   
   private InputMethodManager mInputMethodManager;
   
-  private PopupKeyboardView mInputView;
+  private CustomKeyboardView mInputView;
   private CompletionInfo[] mCompletions;
   
   private StringBuilder mComposing = new StringBuilder();
@@ -124,7 +124,7 @@ public class WrapKeyboard extends InputMethodService implements PopupKeyboardVie
   public View onCreateInputView() {
     Fun.logd("WrapKeyboard.onCreateInputView()");
     
-    mInputView = (PopupKeyboardView) getLayoutInflater().inflate(R.layout.input, null);
+    mInputView = (CustomKeyboardView) getLayoutInflater().inflate(R.layout.input, null);
     mInputView.setOnKeyboardActionListener(this);
     mInputView.setKeyboard(mCurLangKeyboard);
     
@@ -405,7 +405,7 @@ public class WrapKeyboard extends InputMethodService implements PopupKeyboardVie
       handleClose();
       return;
     }
-    else if (primaryCode == PopupKeyboardView.KEYCODE_OPTIONS) {
+    else if (primaryCode == CustomKeyboardView.KEYCODE_OPTIONS) {
       
     }
     else if (primaryCode == Keyboard.KEYCODE_MODE_CHANGE && mInputView != null) {
@@ -464,13 +464,13 @@ public class WrapKeyboard extends InputMethodService implements PopupKeyboardVie
       long eventTime = SystemClock.uptimeMillis();
       InputConnection ic = getCurrentInputConnection();
       
-      if (!PopupKeyboardView.selectionModeEnabled) {
+      if (!CustomKeyboardView.selectionModeEnabled) {
         ic.sendKeyEvent(new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_DOWN, keyEventCode, 0, 0));
-        PopupKeyboardView.selectionModeEnabled = true;
+        CustomKeyboardView.selectionModeEnabled = true;
       }
       else {
         ic.sendKeyEvent(new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_UP, keyEventCode, 0, 0));
-        PopupKeyboardView.selectionModeEnabled = false;
+        CustomKeyboardView.selectionModeEnabled = false;
       }
     }
     else if (primaryCode == Vars.KEY_ALL) {
