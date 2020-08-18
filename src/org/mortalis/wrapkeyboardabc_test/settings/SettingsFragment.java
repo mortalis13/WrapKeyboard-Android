@@ -2,8 +2,8 @@ package org.mortalis.wrapkeyboardabc_test.settings;
 
 import java.util.Map;
 
-import org.mortalis.wrapkeyboardabc_test.R;
 import org.mortalis.wrapkeyboardabc_test.utils.Fun;
+import org.mortalis.wrapkeyboardabc_test.R;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -38,14 +38,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
       
       if (pref instanceof CheckBoxPreference) {
         String pref_key_ext_type_none = Fun.getString(R.string.pref_key_ext_type_none);
+        String pref_key_ext_type_all = Fun.getString(R.string.pref_key_ext_type_all);
         String pref_key_ext_type_french = Fun.getString(R.string.pref_key_ext_type_french);
         String pref_key_ext_type_german = Fun.getString(R.string.pref_key_ext_type_german);
+        String pref_key_ext_type_italian = Fun.getString(R.string.pref_key_ext_type_italian);
         String pref_key_ext_type_spanish = Fun.getString(R.string.pref_key_ext_type_spanish);
-        
-        Fun.logd("pref_key_ext_type_none: [%s]", pref_key_ext_type_none);
-        Fun.logd("pref_key_ext_type_french: [%s]", pref_key_ext_type_french);
-        Fun.logd("pref_key_ext_type_german: [%s]", pref_key_ext_type_german);
-        Fun.logd("pref_key_ext_type_spanish: [%s]", pref_key_ext_type_spanish);
         
         boolean value = sharedPreferences.getBoolean(key, false);
         Fun.logd("onSharedPreferenceChanged(): [%s]: [%s]", key, sharedPreferences.getBoolean(key, false));
@@ -53,27 +50,51 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         if (value) {
           if (key.equals(pref_key_ext_type_none)) {
             Fun.log("==pref_key_ext_type_none");
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_all")).setChecked(false);
             ((CheckBoxPreference) findPreference("pref_key_ext_type_french")).setChecked(false);
             ((CheckBoxPreference) findPreference("pref_key_ext_type_german")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_italian")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_spanish")).setChecked(false);
+          }
+          else if (key.equals(pref_key_ext_type_all)) {
+            Fun.log("==pref_key_ext_type_all");
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_none")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_french")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_german")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_italian")).setChecked(false);
             ((CheckBoxPreference) findPreference("pref_key_ext_type_spanish")).setChecked(false);
           }
           else if (key.equals(pref_key_ext_type_french)) {
             Fun.log("==pref_key_ext_type_french");
             ((CheckBoxPreference) findPreference("pref_key_ext_type_none")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_all")).setChecked(false);
             ((CheckBoxPreference) findPreference("pref_key_ext_type_german")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_italian")).setChecked(false);
             ((CheckBoxPreference) findPreference("pref_key_ext_type_spanish")).setChecked(false);
           }
           else if (key.equals(pref_key_ext_type_german)) {
             Fun.log("==pref_key_ext_type_german");
             ((CheckBoxPreference) findPreference("pref_key_ext_type_none")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_all")).setChecked(false);
             ((CheckBoxPreference) findPreference("pref_key_ext_type_french")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_italian")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_spanish")).setChecked(false);
+          }
+          else if (key.equals(pref_key_ext_type_italian)) {
+            Fun.log("==pref_key_ext_type_italian");
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_none")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_all")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_french")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_german")).setChecked(false);
             ((CheckBoxPreference) findPreference("pref_key_ext_type_spanish")).setChecked(false);
           }
           else if (key.equals(pref_key_ext_type_spanish)) {
             Fun.log("==pref_key_ext_type_spanish");
             ((CheckBoxPreference) findPreference("pref_key_ext_type_none")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_all")).setChecked(false);
             ((CheckBoxPreference) findPreference("pref_key_ext_type_french")).setChecked(false);
             ((CheckBoxPreference) findPreference("pref_key_ext_type_german")).setChecked(false);
+            ((CheckBoxPreference) findPreference("pref_key_ext_type_italian")).setChecked(false);
           }
         }
       }

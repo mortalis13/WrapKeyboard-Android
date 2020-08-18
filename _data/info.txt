@@ -32,3 +32,10 @@ Italian
 
 Spanish
 á é í ó ú ü ñ
+
+
+
+
+0 - ACTION_DOWN
+1 - ACTION_UP
+2 - ACTION_MOVE

@@ -45,6 +45,13 @@ public class WrapKeyboard extends InputMethodService implements PopupKeyboardVie
   private CustomKeyboard mSymbolsExtKeyboard;
   private CustomKeyboard mLatinKeyboard;
   
+  private CustomKeyboard mLatinKeyboard_none;
+  private CustomKeyboard mLatinKeyboard_all;
+  private CustomKeyboard mLatinKeyboard_fr;
+  private CustomKeyboard mLatinKeyboard_de;
+  private CustomKeyboard mLatinKeyboard_it;
+  private CustomKeyboard mLatinKeyboard_es;
+  
   private CustomKeyboard mCyrillicKeyboard;
   private CustomKeyboard mTextEditKeyboard;
   private CustomKeyboard mExtCharsKeyboard;
@@ -76,13 +83,39 @@ public class WrapKeyboard extends InputMethodService implements PopupKeyboardVie
       mLastDisplayWidth = displayWidth;
     }
     
-    mLatinKeyboard = new CustomKeyboard(this, displayWidth, R.xml.keyboard_latin);
+    mLatinKeyboard_none = new CustomKeyboard(this, displayWidth, R.xml.keyboard_latin);
+    mLatinKeyboard_all  = new CustomKeyboard(this, displayWidth, R.xml.keyboard_latin_all);
+    mLatinKeyboard_fr   = new CustomKeyboard(this, displayWidth, R.xml.keyboard_latin_fr);
+    mLatinKeyboard_de   = new CustomKeyboard(this, displayWidth, R.xml.keyboard_latin_de);
+    mLatinKeyboard_it   = new CustomKeyboard(this, displayWidth, R.xml.keyboard_latin_it);
+    mLatinKeyboard_es   = new CustomKeyboard(this, displayWidth, R.xml.keyboard_latin_es);
+    mLatinKeyboard = mLatinKeyboard_none;
+    
     mSymbolsKeyboard = new CustomKeyboard(this, displayWidth, R.xml.keyboard_symbols);
     mSymbolsExtKeyboard = new CustomKeyboard(this, displayWidth, R.xml.keyboard_symbols_ext);
     
     mCyrillicKeyboard = new CustomKeyboard(this, displayWidth, R.xml.keyboard_cyrillic);
     mTextEditKeyboard = new CustomKeyboard(this, displayWidth, R.xml.keyboard_text_edit);
     mExtCharsKeyboard = new CustomKeyboard(this, displayWidth, R.xml.keyboard_ext_chars);
+    
+    if (Fun.getPrefExtType_None()) {
+      mLatinKeyboard = mLatinKeyboard_none;
+    }
+    else if (Fun.getPrefExtType_All()) {
+      mLatinKeyboard = mLatinKeyboard_all;
+    }
+    else if (Fun.getPrefExtType_French()) {
+      mLatinKeyboard = mLatinKeyboard_fr;
+    }
+    else if (Fun.getPrefExtType_German()) {
+      mLatinKeyboard = mLatinKeyboard_de;
+    }
+    else if (Fun.getPrefExtType_Italian()) {
+      mLatinKeyboard = mLatinKeyboard_it;
+    }
+    else if (Fun.getPrefExtType_Spanish()) {
+      mLatinKeyboard = mLatinKeyboard_es;
+    }
     
     mCurLangKeyboard = mLatinKeyboard;
   }
@@ -108,6 +141,28 @@ public class WrapKeyboard extends InputMethodService implements PopupKeyboardVie
   public void onStartInput(EditorInfo attribute, boolean restarting) {
     Fun.logd("WrapKeyboard.onStartInput()");
     super.onStartInput(attribute, restarting);
+    
+    if (mCurLangKeyboard == mLatinKeyboard) {
+      if (Fun.getPrefExtType_None()) {
+        mLatinKeyboard = mLatinKeyboard_none;
+      }
+      else if (Fun.getPrefExtType_All()) {
+        mLatinKeyboard = mLatinKeyboard_all;
+      }
+      else if (Fun.getPrefExtType_French()) {
+        mLatinKeyboard = mLatinKeyboard_fr;
+      }
+      else if (Fun.getPrefExtType_German()) {
+        mLatinKeyboard = mLatinKeyboard_de;
+      }
+      else if (Fun.getPrefExtType_Italian()) {
+        mLatinKeyboard = mLatinKeyboard_it;
+      }
+      else if (Fun.getPrefExtType_Spanish()) {
+        mLatinKeyboard = mLatinKeyboard_es;
+      }
+      mCurLangKeyboard = mLatinKeyboard;
+    }
     
     mComposing.setLength(0);
     updateCandidates();
@@ -350,7 +405,7 @@ public class WrapKeyboard extends InputMethodService implements PopupKeyboardVie
       handleClose();
       return;
     }
-    else if (primaryCode == CustomKeyboardView.KEYCODE_OPTIONS) {
+    else if (primaryCode == PopupKeyboardView.KEYCODE_OPTIONS) {
       
     }
     else if (primaryCode == Keyboard.KEYCODE_MODE_CHANGE && mInputView != null) {
@@ -409,13 +464,13 @@ public class WrapKeyboard extends InputMethodService implements PopupKeyboardVie
       long eventTime = SystemClock.uptimeMillis();
       InputConnection ic = getCurrentInputConnection();
       
-      if (!CustomKeyboardView.selectionModeEnabled) {
+      if (!PopupKeyboardView.selectionModeEnabled) {
         ic.sendKeyEvent(new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_DOWN, keyEventCode, 0, 0));
-        CustomKeyboardView.selectionModeEnabled = true;
+        PopupKeyboardView.selectionModeEnabled = true;
       }
       else {
         ic.sendKeyEvent(new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_UP, keyEventCode, 0, 0));
-        CustomKeyboardView.selectionModeEnabled = false;
+        PopupKeyboardView.selectionModeEnabled = false;
       }
     }
     else if (primaryCode == Vars.KEY_ALL) {
