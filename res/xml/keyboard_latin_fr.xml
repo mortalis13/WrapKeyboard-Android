@@ -10,7 +10,8 @@
     <Key android:codes="97"  android:keyLabel="a" android:popupKeyboard="@xml/keyboard_popup_template"
       android:popupCharacters="@string/fr_alternates_for_a" android:keyEdgeFlags="left"/>
     <Key android:codes="98"  android:keyLabel="b"/>
-    <Key android:codes="99"  android:keyLabel="c"/>
+    <Key android:codes="99"  android:keyLabel="c" android:popupKeyboard="@xml/keyboard_popup_template"
+      android:popupCharacters="@string/fr_alternates_for_c"/>
     <Key android:codes="100" android:keyLabel="d"/>
     <Key android:codes="101" android:keyLabel="e" android:popupKeyboard="@xml/keyboard_popup_template"
       android:popupCharacters="@string/fr_alternates_for_e"/>
@@ -46,7 +47,8 @@
 
   <Row>
     <Key android:codes="-1" android:keyIcon="@drawable/sym_keyboard_shift" android:keyEdgeFlags="left" android:isModifier="true"/>
-    <Key android:codes="121" android:keyLabel="y"/>
+    <Key android:codes="121" android:keyLabel="y" android:popupKeyboard="@xml/keyboard_popup_template"
+      android:popupCharacters="@string/fr_alternates_for_y"/>
     <Key android:codes="122" android:keyLabel="z"/>
     <Key android:codes="43"  android:keyLabel="+"/>
     <Key android:codes="45"  android:keyLabel="-"/>

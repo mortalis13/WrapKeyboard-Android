@@ -12,7 +12,6 @@
   <string name="label_next_key">Next</string>
   <string name="label_send_key">Send</string>
   
-  
   <string name="alternates_for_a">áàâãäāåąæα</string>
   <string name="alternates_for_b">β</string>
   <string name="alternates_for_c">çčćĉ¢</string>
@@ -47,11 +46,23 @@
   <string name="fr_alternates_for_u">ùûü</string>
   <string name="fr_alternates_for_y">ÿ</string>
   
+  <string name="de_alternates_for_a">ä</string>
+  <string name="de_alternates_for_o">ö</string>
+  <string name="de_alternates_for_s">ß</string>
+  <string name="de_alternates_for_u">ü</string>
+  
+  <string name="it_alternates_for_a">à</string>
   <string name="it_alternates_for_e">èé</string>
+  <string name="it_alternates_for_i">ì</string>
   <string name="it_alternates_for_o">òó</string>
+  <string name="it_alternates_for_u">ù</string>
   
+  <string name="es_alternates_for_a">á</string>
+  <string name="es_alternates_for_e">é</string>
+  <string name="es_alternates_for_i">í</string>
+  <string name="es_alternates_for_n">ñ</string>
+  <string name="es_alternates_for_o">ó</string>
   <string name="es_alternates_for_u">úü</string>
-  
   
   <!-- Titles for ImePreference -->
   <string name="settings_name">Wrap Keyboard Settings</string>

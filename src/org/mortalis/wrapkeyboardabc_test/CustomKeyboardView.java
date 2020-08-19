@@ -57,8 +57,6 @@ public class CustomKeyboardView extends View implements View.OnClickListener {
   static boolean selectionModeEnabled;
   static boolean capsLock;
   
-  private Bitmap bitmapShift, bitmapSelect;
-  private Rect shiftRect, selectRect;
   private Paint specKeyPaint;
   
   private float rectRadius;
@@ -657,20 +655,22 @@ public class CustomKeyboardView extends View implements View.OnClickListener {
         }
         canvas.drawBitmap(mBuffer, 0, 0, null);
         
-        // ---
-        
-        List<Key> keys = getKeyboard().getKeys();
-        for (Key key: keys) {
-          if (key.codes[0] == Keyboard.KEYCODE_SHIFT && capsLock || key.codes[0] == Vars.KEY_SELECT && selectionModeEnabled) {
-            float left = key.x + key.width - rectPadding - rectSize;
-            float top = key.y + rectPadding;
-            float right = left + rectSize;
-            float bottom = top + rectSize;
-            
-            RectF dist = new RectF(left, top, right, bottom);
-            canvas.drawRoundRect(dist, rectRadius, rectRadius, specKeyPaint);
-          }
+        customDraw(canvas);
+    }
+    
+    private void customDraw(Canvas canvas) {
+      List<Key> keys = getKeyboard().getKeys();
+      for (Key key: keys) {
+        if (key.codes[0] == Keyboard.KEYCODE_SHIFT && capsLock || key.codes[0] == Vars.KEY_SELECT && selectionModeEnabled) {
+          float left = key.x + key.width - rectPadding - rectSize;
+          float top = key.y + rectPadding;
+          float right = left + rectSize;
+          float bottom = top + rectSize;
+          
+          RectF dist = new RectF(left, top, right, bottom);
+          canvas.drawRoundRect(dist, rectRadius, rectRadius, specKeyPaint);
         }
+      }
     }
 
     private void onBufferDraw() {
