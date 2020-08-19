@@ -78,10 +78,11 @@ public class Fun {
     return context.getResources().getInteger(resourceId);
   }
   
-  public static int getDimension(int resourceId) {
+  public static float getDimension(int resourceId) {
     if (context == null) return 0;
-    return (int) context.getResources().getDimension(resourceId);
+    return context.getResources().getDimension(resourceId);
   }
+  
   public static String getPrefString(String key, String defaultValue) {
     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     return sharedPreferences.getString(key, defaultValue);

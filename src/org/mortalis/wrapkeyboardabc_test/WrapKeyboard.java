@@ -2,6 +2,7 @@ package org.mortalis.wrapkeyboardabc_test;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.view.inputmethod.ExtractedTextRequest;
 
 import org.mortalis.wrapkeyboardabc_test.R;
 import org.mortalis.wrapkeyboardabc_test.utils.Fun;
@@ -477,6 +478,13 @@ public class WrapKeyboard extends InputMethodService implements CustomKeyboardVi
       InputConnection ic = getCurrentInputConnection();
       ic.setSelection(0, 0);
       ic.performContextMenuAction(android.R.id.selectAll);
+    }
+    else if (primaryCode == Vars.KEY_CLEAR) {
+      InputConnection ic = getCurrentInputConnection();
+      CharSequence currentText = ic.getExtractedText(new ExtractedTextRequest(), 0).text;
+      CharSequence beforCursorText = ic.getTextBeforeCursor(currentText.length(), 0);
+      CharSequence afterCursorText = ic.getTextAfterCursor(currentText.length(), 0);
+      ic.deleteSurroundingText(beforCursorText.length(), afterCursorText.length());
     }
     else if (primaryCode == Vars.KEY_COPY) {
       InputConnection ic = getCurrentInputConnection();

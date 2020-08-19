@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.Paint.Align;
 import android.graphics.Region.Op;
@@ -59,6 +60,11 @@ public class CustomKeyboardView extends View implements View.OnClickListener {
   private Bitmap bitmapShift, bitmapSelect;
   private Rect shiftRect, selectRect;
   private Paint specKeyPaint;
+  
+  private float rectRadius;
+  private float rectPadding;
+  private float rectSize;
+  
 
     /**
      * Listener for virtual keyboard events.
@@ -248,6 +254,7 @@ public class CustomKeyboardView extends View implements View.OnClickListener {
     private int mViewWidth;
 
     Handler mHandler;
+    
 
     public CustomKeyboardView(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.keyboardViewStyle);
@@ -351,15 +358,13 @@ public class CustomKeyboardView extends View implements View.OnClickListener {
     
     public void init() {
       specKeyPaint = new Paint();
-      specKeyPaint.setTextAlign(Paint.Align.CENTER);
-      specKeyPaint.setTextSize(25);
+      specKeyPaint.setAntiAlias(true);
+      specKeyPaint.setStyle(Paint.Style.FILL);
       specKeyPaint.setColor(Color.YELLOW);
       
-      bitmapShift = BitmapFactory.decodeResource(getResources(), R.drawable.capson);
-      shiftRect = new Rect(0, 0, bitmapShift.getWidth(), bitmapShift.getHeight());
-      
-      bitmapSelect = BitmapFactory.decodeResource(getResources(), R.drawable.selection_mode);
-      selectRect = new Rect(0, 0, bitmapSelect.getWidth(), bitmapSelect.getHeight());
+      rectRadius = Fun.getDimension(R.dimen.sticky_indicator_radius);
+      rectPadding = Fun.getDimension(R.dimen.sticky_indicator_distance);
+      rectSize = Fun.getDimension(R.dimen.sticky_indicator_size);
       
       
       initGestureDetector();
@@ -653,16 +658,17 @@ public class CustomKeyboardView extends View implements View.OnClickListener {
         canvas.drawBitmap(mBuffer, 0, 0, null);
         
         // ---
+        
         List<Key> keys = getKeyboard().getKeys();
         for (Key key: keys) {
-          if (key.codes[0] == Keyboard.KEYCODE_SHIFT && capsLock) {
-            Rect dist = new Rect(key.x, key.y, key.x + key.width, key.y + key.height);
-            canvas.drawBitmap(bitmapShift, shiftRect, dist, specKeyPaint);
-          }
-          
-          if (key.codes[0] == Vars.KEY_SELECT && selectionModeEnabled) {
-            Rect dist = new Rect(key.x, key.y, key.x + key.width, key.y + key.height);
-            canvas.drawBitmap(bitmapSelect, selectRect, dist, specKeyPaint);
+          if (key.codes[0] == Keyboard.KEYCODE_SHIFT && capsLock || key.codes[0] == Vars.KEY_SELECT && selectionModeEnabled) {
+            float left = key.x + key.width - rectPadding - rectSize;
+            float top = key.y + rectPadding;
+            float right = left + rectSize;
+            float bottom = top + rectSize;
+            
+            RectF dist = new RectF(left, top, right, bottom);
+            canvas.drawRoundRect(dist, rectRadius, rectRadius, specKeyPaint);
           }
         }
     }

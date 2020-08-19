@@ -19,6 +19,7 @@ public class Vars {
   public static final int KEY_SELECT = 60011;
   
   public static final int KEY_ALL = 60007;
+  public static final int KEY_CLEAR = 60012;
   public static final int KEY_COPY = 60008;
   public static final int KEY_CUT = 60009;
   public static final int KEY_PASTE = 60010;
