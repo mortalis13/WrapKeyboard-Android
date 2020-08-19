@@ -1,4 +1,4 @@
-package org.mortalis.wrapkeyboardabc_test;
+package org.mortalis.wrapkeyboardabc;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -33,9 +33,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 // import com.android.internal.R;
-import org.mortalis.wrapkeyboardabc_test.R;
-import org.mortalis.wrapkeyboardabc_test.utils.Fun;
-import org.mortalis.wrapkeyboardabc_test.utils.Vars;
+import org.mortalis.wrapkeyboardabc.R;
+import org.mortalis.wrapkeyboardabc.utils.Fun;
+import org.mortalis.wrapkeyboardabc.utils.Vars;
 
 import android.graphics.Color;
 import android.graphics.BitmapFactory;

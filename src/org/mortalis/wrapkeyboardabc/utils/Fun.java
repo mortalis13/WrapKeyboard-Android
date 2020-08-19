@@ -1,6 +1,6 @@
-package org.mortalis.wrapkeyboardabc_test.utils;
+package org.mortalis.wrapkeyboardabc.utils;
 
-import org.mortalis.wrapkeyboardabc_test.R;
+import org.mortalis.wrapkeyboardabc.R;
 
 import java.io.File;
 import java.io.FileInputStream;

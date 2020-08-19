@@ -1,6 +1,6 @@
-package org.mortalis.wrapkeyboardabc_test.settings;
+package org.mortalis.wrapkeyboardabc.settings;
 
-import org.mortalis.wrapkeyboardabc_test.utils.Fun;
+import org.mortalis.wrapkeyboardabc.utils.Fun;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
