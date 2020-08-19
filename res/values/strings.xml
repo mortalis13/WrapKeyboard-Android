@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Title for Latin keyboard  -->
-  <string name="app_version">1.3.0</string>
-  <string name="ime_name">Wrap Keyboard 1.3.0</string>
+  <string name="app_version">1.3.1</string>
+  <string name="ime_name">Wrap Keyboard 1.3.1</string>
 
   <!-- Symbols that are commonly considered word separators in this language -->
   <string name="word_separators">\u0020.,;:!?\n()[]*&amp;@{}/&lt;&gt;_+=|&quot;</string>
