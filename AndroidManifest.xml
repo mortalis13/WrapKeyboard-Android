@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" 
         package="org.mortalis.wrapkeyboardabc"
-        android:versionCode="120"
+        android:versionCode="121"
         android:versionName="@string/app_version">
     
     <supports-screens
