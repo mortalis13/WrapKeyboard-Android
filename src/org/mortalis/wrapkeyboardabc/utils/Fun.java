@@ -95,23 +95,7 @@ public class Fun {
     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     return sharedPreferences.getBoolean(key, defaultValue);
   }
-  
-  
-  public static String getPrefString(String key, String defaultValue) {
-    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-    return sharedPreferences.getString(key, defaultValue);
-  }
-  
-  public static int getPrefInt(String key, int defaultValue) {
-    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-    return sharedPreferences.getInt(key, defaultValue);
-  }
-  
-  public static boolean getPrefBool(String key, boolean defaultValue) {
-    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-    return sharedPreferences.getBoolean(key, defaultValue);
-  }
-  
+
   
   //---------------------------------------------- Log ----------------------------------------------
   
@@ -334,38 +318,7 @@ public class Fun {
     return result;
   }
 
-  //---------------------------------------------- App Utils ----------------------------------------------
-  
-  public static boolean getPrefExtType_None() {
-    String key = getString(R.string.pref_key_ext_type_none);
-    return getPrefBool(key, false);
-  }
-  
-  public static boolean getPrefExtType_All() {
-    String key = getString(R.string.pref_key_ext_type_all);
-    return getPrefBool(key, false);
-  }
-  
-  public static boolean getPrefExtType_French() {
-    String key = getString(R.string.pref_key_ext_type_french);
-    return getPrefBool(key, false);
-  }
-  
-  public static boolean getPrefExtType_German() {
-    String key = getString(R.string.pref_key_ext_type_german);
-    return getPrefBool(key, false);
-  }
-  
-  public static boolean getPrefExtType_Italian() {
-    String key = getString(R.string.pref_key_ext_type_italian);
-    return getPrefBool(key, false);
-  }
-  
-  public static boolean getPrefExtType_Spanish() {
-    String key = getString(R.string.pref_key_ext_type_spanish);
-    return getPrefBool(key, false);
-  }
-  
+
   //---------------------------------------------- App Utils ----------------------------------------------
   
   public static boolean getPrefExtType_None() {
