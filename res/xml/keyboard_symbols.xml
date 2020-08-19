@@ -35,12 +35,12 @@
   
   <Row>
     <Key android:codes="-1" android:keyIcon="@drawable/sym_keyboard_shift" android:isModifier="true" android:keyEdgeFlags="left"/>
-    <Key android:codes="35" android:keyLabel="\#"/>
     <Key android:codes="61" android:keyLabel="="/>
     <Key android:codes="43" android:keyLabel="+"/>
     <Key android:codes="45" android:keyLabel="-"/>
     <Key android:codes="42" android:keyLabel="*"/>
     <Key android:codes="47" android:keyLabel="/"/>
+    <Key android:keyLabel="\\"/>
     <Key android:codes="-5" android:keyIcon="@drawable/sym_keyboard_delete" android:keyEdgeFlags="right" android:isRepeatable="true" android:isModifier="true"/>
   </Row>
   

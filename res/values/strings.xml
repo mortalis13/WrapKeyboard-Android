@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Title for Latin keyboard  -->
-  <string name="app_version">1.2.1</string>
-  <string name="ime_name">Wrap Keyboard 1.2.1</string>
+  <string name="app_version">1.3.0</string>
+  <string name="ime_name">Wrap Keyboard 1.3.0</string>
 
   <!-- Symbols that are commonly considered word separators in this language -->
   <string name="word_separators">\u0020.,;:!?\n()[]*&amp;@{}/&lt;&gt;_+=|&quot;</string>
@@ -12,7 +12,7 @@
   <string name="label_next_key">Next</string>
   <string name="label_send_key">Send</string>
   
-  <string name="alternates_for_a">áàâãäåæα</string>
+  <string name="alternates_for_a">áàâãäāåąæα</string>
   <string name="alternates_for_b">β</string>
   <string name="alternates_for_c">çčćĉ¢</string>
   <string name="alternates_for_d">ðđδ</string>
@@ -46,11 +46,23 @@
   <string name="fr_alternates_for_u">ùûü</string>
   <string name="fr_alternates_for_y">ÿ</string>
   
+  <string name="de_alternates_for_a">ä</string>
+  <string name="de_alternates_for_o">ö</string>
+  <string name="de_alternates_for_s">ß</string>
+  <string name="de_alternates_for_u">ü</string>
+  
+  <string name="it_alternates_for_a">à</string>
   <string name="it_alternates_for_e">èé</string>
+  <string name="it_alternates_for_i">ì</string>
   <string name="it_alternates_for_o">òó</string>
+  <string name="it_alternates_for_u">ù</string>
   
+  <string name="es_alternates_for_a">á</string>
+  <string name="es_alternates_for_e">é</string>
+  <string name="es_alternates_for_i">í</string>
+  <string name="es_alternates_for_n">ñ</string>
+  <string name="es_alternates_for_o">ó</string>
   <string name="es_alternates_for_u">úü</string>
-  
   
   <!-- Titles for ImePreference -->
   <string name="settings_name">Wrap Keyboard Settings</string>

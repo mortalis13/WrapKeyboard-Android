@@ -9,5 +9,6 @@
   <color name="key_background_stroke">#818181</color>
   
   <color name="key_popup_background_default">#2d3e48</color>
-  <color name="key_popup_background_pressed">#394f5b</color>
+  <color name="key_popup_background_pressed">#445e6c</color>
+  <color name="key_popup_background_stroke">#818181</color>
 </resources>

@@ -12,25 +12,30 @@ WrapKeyboard.onUpdateSelection()
 
 == Diacritics
 French
-à â æ
+à, â, æ
 ç
-é è ê ë
-ï î
-ô œ
-ù û ü
+é, è, ê, ë
+ï, î
+ô, œ
+ù, û, ü
 ÿ
 
 German
-ä ö ß ü
+ä ö ü ß
 
 Italian
 à
-è é
+è, é
 ì
-ò ó
+ò, ó
 ù
 
 Spanish
-á é í ó
-ú ü
-ñ
+á é í ó ú ü ñ
+
+
+
+
+0 - ACTION_DOWN
+1 - ACTION_UP
+2 - ACTION_MOVE

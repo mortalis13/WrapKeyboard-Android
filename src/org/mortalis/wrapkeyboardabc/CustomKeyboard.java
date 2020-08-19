@@ -1,5 +1,6 @@
 package org.mortalis.wrapkeyboardabc;
 
+import org.mortalis.wrapkeyboardabc.R;
 import org.mortalis.wrapkeyboardabc.utils.Fun;
 
 import android.content.Context;
@@ -123,6 +124,15 @@ public class CustomKeyboard extends Keyboard {
     @Override
     public int[] getCurrentDrawableState() {
       int[] states = KEY_STATE_NORMAL;
+      
+      // return super.getCurrentDrawableState();
+      
+      // if (modifier) {
+      //   return pressed ? KEY_STATE_FUNCTION_PRESSED: KEY_STATE_FUNCTION;
+      // }
+      // else {
+      //   return pressed ? KEY_STATE_PRESSED: KEY_STATE_NORMAL;
+      // }
       
       if (on) {
         if (modifier) {

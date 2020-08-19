@@ -2,7 +2,9 @@ package org.mortalis.wrapkeyboardabc;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.view.inputmethod.ExtractedTextRequest;
 
+import org.mortalis.wrapkeyboardabc.R;
 import org.mortalis.wrapkeyboardabc.utils.Fun;
 import org.mortalis.wrapkeyboardabc.utils.Vars;
 
@@ -22,7 +24,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 
 
-public class WrapKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
+public class WrapKeyboard extends InputMethodService implements CustomKeyboardView.OnKeyboardActionListener {
   
   private static final boolean DEBUG = false;
   private static final boolean PROCESS_HARD_KEYS = true;
@@ -162,7 +164,6 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
       }
       mCurLangKeyboard = mLatinKeyboard;
     }
-    
     
     mComposing.setLength(0);
     updateCandidates();
@@ -477,6 +478,13 @@ public class WrapKeyboard extends InputMethodService implements KeyboardView.OnK
       InputConnection ic = getCurrentInputConnection();
       ic.setSelection(0, 0);
       ic.performContextMenuAction(android.R.id.selectAll);
+    }
+    else if (primaryCode == Vars.KEY_CLEAR) {
+      InputConnection ic = getCurrentInputConnection();
+      CharSequence currentText = ic.getExtractedText(new ExtractedTextRequest(), 0).text;
+      CharSequence beforCursorText = ic.getTextBeforeCursor(currentText.length(), 0);
+      CharSequence afterCursorText = ic.getTextAfterCursor(currentText.length(), 0);
+      ic.deleteSurroundingText(beforCursorText.length(), afterCursorText.length());
     }
     else if (primaryCode == Vars.KEY_COPY) {
       InputConnection ic = getCurrentInputConnection();
