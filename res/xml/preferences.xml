@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+  <Preference
+    android:key="@string/pref_key_switch_keyboard_button"
+    android:title="@string/pref_key_switch_keyboard_title"
+  />
+  
   <PreferenceCategory android:title="@string/pref_cat_title_ext_keyboard_type">
     <org.mortalis.wrapkeyboardabc.settings.RadioButtonPreference
       android:key="@string/pref_key_ext_type_none"

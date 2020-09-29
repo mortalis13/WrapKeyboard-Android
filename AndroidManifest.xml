@@ -9,7 +9,7 @@
             android:normalScreens="true"
             android:smallScreens="true" />
     
-    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="26" />
+    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="26" />
     
     <application
       android:label="@string/ime_name"

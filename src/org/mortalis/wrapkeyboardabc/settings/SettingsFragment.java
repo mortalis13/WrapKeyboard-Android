@@ -12,9 +12,13 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.view.inputmethod.InputMethodManager;
+import android.content.Context;
 
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+  
+  private Context context;
   
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -22,27 +26,43 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     
     super.onCreate(savedInstanceState);
     addPreferencesFromResource(R.xml.preferences);
+    
+    Preference button = findPreference(getString(R.string.pref_key_switch_keyboard_button));
+    button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+      public boolean onPreferenceClick(Preference preference) {   
+        showSwitchDialog();
+        return true;
+      }
+    });
   }
   
   
   @Override
   public void onAttach(Activity context) {
     super.onAttach(context);
+    if (context == null) return;
+    this.context = context;
+  }
+
+  @Override
+  public void onAttach(Context context) {
+    super.onAttach(context);
+    if (context == null) return;
+    this.context = context;
   }
 
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     try {
-      
       Preference pref = findPreference(key);
       
       if (pref instanceof CheckBoxPreference) {
-        String pref_key_ext_type_none = Fun.getString(R.string.pref_key_ext_type_none);
-        String pref_key_ext_type_all = Fun.getString(R.string.pref_key_ext_type_all);
-        String pref_key_ext_type_french = Fun.getString(R.string.pref_key_ext_type_french);
-        String pref_key_ext_type_german = Fun.getString(R.string.pref_key_ext_type_german);
-        String pref_key_ext_type_italian = Fun.getString(R.string.pref_key_ext_type_italian);
-        String pref_key_ext_type_spanish = Fun.getString(R.string.pref_key_ext_type_spanish);
+        String pref_key_ext_type_none = getString(R.string.pref_key_ext_type_none);
+        String pref_key_ext_type_all = getString(R.string.pref_key_ext_type_all);
+        String pref_key_ext_type_french = getString(R.string.pref_key_ext_type_french);
+        String pref_key_ext_type_german = getString(R.string.pref_key_ext_type_german);
+        String pref_key_ext_type_italian = getString(R.string.pref_key_ext_type_italian);
+        String pref_key_ext_type_spanish = getString(R.string.pref_key_ext_type_spanish);
         
         boolean value = sharedPreferences.getBoolean(key, false);
         Fun.logd("onSharedPreferenceChanged(): [%s]: [%s]", key, sharedPreferences.getBoolean(key, false));
@@ -146,6 +166,12 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
       pref.setSummary(summary);
     }
+  }
+  
+  private void showSwitchDialog() {
+    if (context == null) return;
+    InputMethodManager imeManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+    imeManager.showInputMethodPicker();
   }
 
 }

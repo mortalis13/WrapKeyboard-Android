@@ -72,12 +72,15 @@
   
   <string name="pref_cat_title_ext_keyboard_type">Extended Keyboard Family</string>
 
+  <string name="pref_key_switch_keyboard_button">pref_key_switch_keyboard_button</string>
   <string name="pref_key_ext_type_none">pref_key_ext_type_none</string>
   <string name="pref_key_ext_type_all">pref_key_ext_type_all</string>
   <string name="pref_key_ext_type_french">pref_key_ext_type_french</string>
   <string name="pref_key_ext_type_german">pref_key_ext_type_german</string>
   <string name="pref_key_ext_type_italian">pref_key_ext_type_italian</string>
   <string name="pref_key_ext_type_spanish">pref_key_ext_type_spanish</string>
+  
+  <string name="pref_key_switch_keyboard_title">Switch Keyboard...</string>
   
   <string name="pref_title_ext_type_none">None</string>
   <string name="pref_title_ext_type_all">All</string>

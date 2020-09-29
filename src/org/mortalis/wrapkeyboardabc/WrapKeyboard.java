@@ -253,9 +253,7 @@ public class WrapKeyboard extends InputMethodService implements CustomKeyboardVi
       updateCandidates();
       
       InputConnection ic = getCurrentInputConnection();
-      if (ic != null) {
-        ic.finishComposingText();
-      }
+      if (ic != null) ic.finishComposingText();
     }
   }
   
@@ -464,6 +462,7 @@ public class WrapKeyboard extends InputMethodService implements CustomKeyboardVi
       int keyEventCode = KeyEvent.KEYCODE_SHIFT_LEFT;
       long eventTime = SystemClock.uptimeMillis();
       InputConnection ic = getCurrentInputConnection();
+      if (ic == null) return;
       
       if (!CustomKeyboardView.selectionModeEnabled) {
         ic.sendKeyEvent(new KeyEvent(eventTime, eventTime, KeyEvent.ACTION_DOWN, keyEventCode, 0, 0));
@@ -476,11 +475,13 @@ public class WrapKeyboard extends InputMethodService implements CustomKeyboardVi
     }
     else if (primaryCode == Vars.KEY_ALL) {
       InputConnection ic = getCurrentInputConnection();
+      if (ic == null) return;
       ic.setSelection(0, 0);
       ic.performContextMenuAction(android.R.id.selectAll);
     }
     else if (primaryCode == Vars.KEY_CLEAR) {
       InputConnection ic = getCurrentInputConnection();
+      if (ic == null) return;
       CharSequence currentText = ic.getExtractedText(new ExtractedTextRequest(), 0).text;
       CharSequence beforCursorText = ic.getTextBeforeCursor(currentText.length(), 0);
       CharSequence afterCursorText = ic.getTextAfterCursor(currentText.length(), 0);
@@ -488,14 +489,17 @@ public class WrapKeyboard extends InputMethodService implements CustomKeyboardVi
     }
     else if (primaryCode == Vars.KEY_COPY) {
       InputConnection ic = getCurrentInputConnection();
+      if (ic == null) return;
       ic.performContextMenuAction(android.R.id.copy);
     }
     else if (primaryCode == Vars.KEY_CUT) {
       InputConnection ic = getCurrentInputConnection();
+      if (ic == null) return;
       ic.performContextMenuAction(android.R.id.cut);
     }
     else if (primaryCode == Vars.KEY_PASTE) {
       InputConnection ic = getCurrentInputConnection();
+      if (ic == null) return;
       ic.performContextMenuAction(android.R.id.paste);
     }
     else {
@@ -556,6 +560,7 @@ public class WrapKeyboard extends InputMethodService implements CustomKeyboardVi
   
   
   private void commitTyped(InputConnection inputConnection) {
+    if (inputConnection == null) return;
     if (mComposing.length() > 0) {
       inputConnection.commitText(mComposing, mComposing.length());
       mComposing.setLength(0);
@@ -570,12 +575,14 @@ public class WrapKeyboard extends InputMethodService implements CustomKeyboardVi
     
     if (length > 1) {
       mComposing.delete(length - 1, length);
-      getCurrentInputConnection().setComposingText(mComposing, 1);
+      InputConnection ic = getCurrentInputConnection();
+      if (ic != null) ic.setComposingText(mComposing, 1);
       updateCandidates();
     }
     else if (length > 0) {
       mComposing.setLength(0);
-      getCurrentInputConnection().commitText("", 0);
+      InputConnection ic = getCurrentInputConnection();
+      if (ic != null) ic.commitText("", 0);
       updateCandidates();
     }
     else {
@@ -616,12 +623,14 @@ public class WrapKeyboard extends InputMethodService implements CustomKeyboardVi
     
     if (isAlphabet(primaryCode) && mPredictionOn) {
       mComposing.append((char) primaryCode);
-      getCurrentInputConnection().setComposingText(mComposing, 1);
+      InputConnection ic = getCurrentInputConnection();
+      if (ic != null) ic.setComposingText(mComposing, 1);
       updateShiftKeyState(getCurrentInputEditorInfo());
       updateCandidates();
     }
     else {
-      getCurrentInputConnection().commitText(String.valueOf((char) primaryCode), 1);
+      InputConnection ic = getCurrentInputConnection();
+      if (ic != null) ic.commitText(String.valueOf((char) primaryCode), 1);
     }
   }
   
@@ -672,7 +681,8 @@ public class WrapKeyboard extends InputMethodService implements CustomKeyboardVi
   public void pickSuggestionManually(int index) {
     if (mCompletionOn && mCompletions != null && index >= 0 && index < mCompletions.length) {
       CompletionInfo ci = mCompletions[index];
-      getCurrentInputConnection().commitCompletion(ci);
+      InputConnection ic = getCurrentInputConnection();
+      if (ic != null) ic.commitCompletion(ci);
       updateShiftKeyState(getCurrentInputEditorInfo());
     }
     else if (mComposing.length() > 0) {
@@ -692,8 +702,10 @@ public class WrapKeyboard extends InputMethodService implements CustomKeyboardVi
   }
   
   private void keyDownUp(int keyEventCode) {
-    getCurrentInputConnection().sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyEventCode));
-    getCurrentInputConnection().sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyEventCode));
+    InputConnection ic = getCurrentInputConnection();
+    if (ic == null) return;
+    ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, keyEventCode));
+    ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, keyEventCode));
   }
   
   private void sendKey(int keyCode) {
@@ -707,7 +719,9 @@ public class WrapKeyboard extends InputMethodService implements CustomKeyboardVi
           keyDownUp(keyCode - '0' + KeyEvent.KEYCODE_0);
         }
         else {
-          getCurrentInputConnection().commitText(String.valueOf((char) keyCode), 1);
+          InputConnection ic = getCurrentInputConnection();
+          if (ic == null) return;
+          ic.commitText(String.valueOf((char) keyCode), 1);
         }
     }
   }

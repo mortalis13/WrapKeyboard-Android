@@ -17,4 +17,11 @@
     custom:keyBackground="@drawable/key_popup_background"
     custom:keyTextColor="#fff"
   />
+  
+  <!-- <android.inputmethodservice.KeyboardView
+    android:id="@android:id/keyboardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+  /> -->
 </LinearLayout>

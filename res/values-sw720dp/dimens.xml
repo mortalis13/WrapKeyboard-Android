@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <dimen name="key_height">46dp</dimen>
-  <dimen name="popup_key_height">40dp</dimen>
+  <dimen name="key_height">76dp</dimen>
+  <dimen name="popup_key_height">70dp</dimen>
   
-  <dimen name="key_text_size">22dp</dimen>
-  <dimen name="label_text_size">14dp</dimen>
+  <dimen name="key_text_size">34dp</dimen>
+  <dimen name="label_text_size">24dp</dimen>
   
   <dimen name="sticky_indicator_distance">8dp</dimen>
   <dimen name="sticky_indicator_size">6dp</dimen>
