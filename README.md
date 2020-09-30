@@ -10,9 +10,9 @@ Compact Keyboard with A-Z layout
 
 ## Screenshots
 
-![Image_1](_img/wrapkeyboard-1.png)<br><br>
-![Image_2](_img/wrapkeyboard-2.png)<br><br>
-![Image_3](_img/wrapkeyboard-3.png)<br><br>
-![Image_4](_img/wrapkeyboard-4.png)<br><br>
-![Image_5](_img/wrapkeyboard-5.png)<br><br>
-![Image_6](_img/wrapkeyboard-6.png)<br><br>
+![Image_1](_img/wrapkeyboard-1_1.png)<br><br>
+![Image_2](_img/wrapkeyboard-2_1.png)<br><br>
+![Image_3](_img/wrapkeyboard-3_1.png)<br><br>
+![Image_4](_img/wrapkeyboard-4_1.png)<br><br>
+![Image_5](_img/wrapkeyboard-5_1.png)<br><br>
+![Image_6](_img/wrapkeyboard-6_1.png)<br><br>
