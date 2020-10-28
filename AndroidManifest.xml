@@ -1,15 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" 
         package="org.mortalis.wrapkeyboardabc"
-        android:versionCode="140"
-        android:versionName="@string/app_version">
-    
-    <supports-screens
-            android:anyDensity="true"
-            android:largeScreens="true"
-            android:normalScreens="true"
-            android:smallScreens="true" />
-    
-    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="26" />
+>
+    <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true" />
     
     <application
       android:label="@string/ime_name"
@@ -31,14 +23,5 @@
           <action android:name="android.intent.action.MAIN"/>
         </intent-filter>
       </activity>
-      
-      <!-- <activity
-        android:name=".ImePreferences"
-        android:label="@string/settings_name">
-        <intent-filter>
-          <action android:name="android.intent.action.MAIN"/>
-        </intent-filter>
-      </activity> -->
-      
     </application>
 </manifest>

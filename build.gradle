@@ -1,4 +1,4 @@
-// Gradle 4.3.1
+// gradle-6.7
 // jdk1.8.0_91
 
 apply plugin: 'com.android.application'
@@ -12,8 +12,9 @@ buildscript {
       url "https://plugins.gradle.org/m2/"
     }
   }
+  
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.0.1'
+    classpath 'com.android.tools.build:gradle:4.1.0'
   }
 }
 
@@ -28,19 +29,39 @@ allprojects {
 
 // -- app
 android {
-  compileSdkVersion 26
+  compileSdkVersion 29
   
   defaultConfig {
     applicationId "org.mortalis.wrapkeyboardabc"
     vectorDrawables.useSupportLibrary = true
+    
+    versionCode 140
+    versionName String.format('%d.%d.%d', (int)(versionCode/10/10), (int)(versionCode/10)%10, versionCode%10)
+    
+    minSdkVersion 16
+    targetSdkVersion 29
+    
+    resValue "string", "app_version", versionName
   }
   
-  // -- uncomment to build NDK modules
-  // externalNativeBuild {
-  //   ndkBuild {
-  //     path "jni/Android.mk"
-  //   }
-  // }
+  signingConfigs {
+    release {
+      storeFile file("release/wrapkeyboard-release-key.jks")
+      storePassword "wrapkeyboard"
+      keyAlias "wrapkeyboard-alias"
+      keyPassword "wrapkeyboard"
+    }
+  }
+  
+  buildTypes {
+    release {
+      minifyEnabled true
+      // shrinkResources true
+      debuggable false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      signingConfig signingConfigs.release
+    }
+  }
   
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
@@ -56,9 +77,14 @@ android {
       assets.srcDirs 'assets'
     }
 
-    instrumentTest.setRoot('tests')
     debug.setRoot('build-types/debug')
     release.setRoot('build-types/release')
+  }
+  
+  lintOptions {
+    // checkReleaseBuilds false
+    // abortOnError false
+    disable "ReferenceType"
   }
 }
 
